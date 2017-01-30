@@ -111,7 +111,6 @@ $(function() {
             case 119:
                 canRemoveCube(playerOneStacks, colors[3]); // Yellow
                 break;
-
                 // I - 105; K - 107; L - 108; O - 111;
             case 105:
                 canRemoveCube(playerTwoStacks, colors[0]); // Red
@@ -143,6 +142,7 @@ $(function() {
 
     function removeCube(cubePosition) {
         console.log(cubePosition);
+        cubePosition.shift();
     }
 
     /* Initialises web page */

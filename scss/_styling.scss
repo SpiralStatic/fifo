@@ -123,20 +123,14 @@ main {
                 margin-bottom: 1%;
                 border-bottom: 4px solid $white;
 
-                .red {
-                    background-color: red;
-                }
+                ul {
+                    display: inline-block;
+                    float: left;
+                    width: 33.33%;
 
-                .blue {
-                    background-color: blue;
-                }
-
-                .green {
-                    background-color: green;
-                }
-
-                .yellow {
-                    background-color: yellow;
+                    li {
+                        list-style: none;
+                    }
                 }
             }
 
@@ -152,6 +146,21 @@ main {
                         border-radius: 100%;
                     }
                 }
+            }
+            .red {
+                background-color: red;
+            }
+
+            .blue {
+                background-color: blue;
+            }
+
+            .green {
+                background-color: green;
+            }
+
+            .yellow {
+                background-color: yellow;
             }
         }
     }
