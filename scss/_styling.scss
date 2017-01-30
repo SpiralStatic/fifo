@@ -1,5 +1,7 @@
 //-----=GLOBALS=-----//
-html, body {
+
+body,
+html {
     width: 100vw;
     height: 100vh;
 }
@@ -11,16 +13,93 @@ div.columns {
 header {
     height: 10vh;
     text-align: center;
+    //-----=RAINBOW HEADER=-----//
+    // @https://codepen.io/nohoid/pen/kIfto
+    background: linear-gradient(124deg, #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8, #dd00f3, #dd00f3);
+    background-size: 1800% 1800%;
+    -webkit-animation: rainbow 18s ease infinite;
+    -z-animation: rainbow 18s ease infinite;
+    -o-animation: rainbow 18s ease infinite;
+    animation: rainbow 18s ease infinite;
+    @-webkit-keyframes rainbow {
+        0% {
+            background-position: 0 82%;
+        }
+
+        50% {
+            background-position: 100% 19%;
+        }
+
+        100% {
+            background-position: 0 82%;
+        }
+    }
+    @-moz-keyframes rainbow {
+        0% {
+            background-position: 0 82%;
+        }
+
+        50% {
+            background-position: 100% 19%;
+        }
+
+        100% {
+            background-position: 0 82%;
+        }
+    }
+    @-o-keyframes rainbow {
+        0% {
+            background-position: 0 82%;
+        }
+
+        50% {
+            background-position: 100% 19%;
+        }
+
+        100% {
+            background-position: 0 82%;
+        }
+    }
+    @keyframes rainbow {
+        0% {
+            background-position: 0 82%;
+        }
+
+        50% {
+            background-position: 100% 19%;
+        }
+
+        100% {
+            background-position: 0 82%;
+        }
+    }
 }
+//-----=MAIN=-----//
 
 main {
     height: 90vh;
     padding-top: 5vh;
+    background: url('../images/background.png'); // Fallback
+    background: -moz-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 59%, rgba(0, 0, 0, 0.65) 100%), url('../images/background.png');
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(0, 0, 0, 0)), color-stop(59%, rgba(0, 0, 0, 0)), color-stop(100%, rgba(0, 0, 0, 0.65))), url('../images/background.png');
+    background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 59%, rgba(0, 0, 0, 0.65) 100%), url('../images/background.png');
+    background: -o-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 59%, rgba(0, 0, 0, 0.65) 100%), url('../images/background.png');
+    background: -ms-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 59%, rgba(0, 0, 0, 0.65) 100%), url('../images/background.png');
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 59%, rgba(0, 0, 0, 0.65) 100%), url('../images/background.png');
 
     div {
         margin: 10vh 0;
 
+        a.button {
+            border: 3px inset $secondary-color;
+        }
+
         a.active {
+            background-color: $white;
+            border: 3px outset $light-gray;
+        }
+
+        a.active:hover {
             background-color: $white;
         }
     }
@@ -30,6 +109,7 @@ main {
 
         button.button {
             width: 50%;
+            border: 3px inset $alert-color;
         }
     }
 }
