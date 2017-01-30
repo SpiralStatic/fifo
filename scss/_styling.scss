@@ -15,8 +15,21 @@ header {
 
 main {
     height: 90vh;
+    padding-top: 5vh;
 
-    div.expanded {
-        margin: 25% 0;
+    div {
+        margin: 10vh 0;
+
+        a.active {
+            background-color: $white;
+        }
+    }
+
+    div.button-container {
+        text-align: center;
+
+        button.button {
+            width: 50%;
+        }
     }
 }
