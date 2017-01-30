@@ -131,18 +131,23 @@ $(function() {
 
     function canRemoveCube(player, color) {
         if (player[0][0].color === color && player[1][0].color === color) {
-            removeCube(player[0][0]);
-            removeCube(player[1][0]);
+            removeCube(player[0]);
+            removeCube(player[1]);
         } else if (player[0][0].color === color) {
-            removeCube(player[0][0]);
+            removeCube(player[0]);
         } else if (player[1][0].color === color) {
-            removeCube(player[1][0]);
+            removeCube(player[1]);
         }
     }
 
-    function removeCube(cubePosition) {
+    function removeCube(array) {
         console.log(cubePosition);
-        cubePosition.shift();
+        array.shift();
+        updateDisplay();
+    }
+
+    function updateDisplay() {
+        
     }
 
     /* Initialises web page */
