@@ -114,4 +114,13 @@ main {
             }
         }
     }
+
+    div#game {
+        div.player-section {
+            height: 60vh;
+        }
+        div.player-control {
+            height: 10vh;
+        }
+    }
 }

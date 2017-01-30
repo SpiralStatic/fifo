@@ -22,10 +22,22 @@ $(function() {
         console.log(powered);
         $('#menu').slideUp();
         $('#game').slideUp();
+        stacksSetUp(noOfStacks);
     }
 
     function stacksSetUp(noOfStacks) {
+        var stackTypes = ['SINGLE', 'DOUBLE'];
+        var stacks = [];
+        console.log(stackTypes.indexOf(noOfStacks));
+        for (var i = 0; i < stackTypes.indexOf(noOfStacks).length + 1; i++) {
+            stacks.push(createStack());
+        }
+        console.log(stacks);
+    }
 
+    function createStack() {
+        console.log("Stack Created");
+        return ['A'];
     }
 
     function initialise() {
