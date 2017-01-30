@@ -1,6 +1,10 @@
 $(function() {
     $(document).foundation();
 
+    /* Variables */
+    var playerOneStacks = [];
+    var playerTwoStacks = [];
+
     function addMenuListeners() {
         console.log("addMenuListeners()");
         /* Toggles selected menu option value */
@@ -18,23 +22,27 @@ $(function() {
             startGame($(settings[0]).html(), $(settings[1]).html(), $(settings[2]).html());
             $('#menu').slideToggle('slow');
             $('#game').slideToggle('slow');
+            addGameListeners();
+        });
+    }
+
+    function addGameListeners() {
+        // Q - 113; A - 97; S - 115; W - 119;
+        // I - 105; K - 107; L - 108; O - 111;
+        $(document).bind('keypress', function(e) {
+            keyCheck(e.keyCode);
         });
     }
 
     /* Starts the game by taking the required settings */
     function startGame(noOfStacks, similarity, powered) {
         console.log("startGame(" + noOfStacks + ", " + similarity + ", " + powered + ")");
-        var playerOneStacks = stacksSetUp(noOfStacks);
-        var playerTwoStacks;
+        playerOneStacks = stacksSetUp(noOfStacks);
         if (similarity === 'EQUAL') {
             playerTwoStacks = playerOneStacks;
         } else {
             playerTwoStacks = stacksSetUp(noOfStacks);
         }
-
-        console.log("Player One: " + playerOneStacks);
-        console.log("Player Two: " + playerTwoStacks);
-
         displayStacks('one', playerOneStacks);
         displayStacks('two', playerTwoStacks);
     }
@@ -81,9 +89,80 @@ $(function() {
         var maxCubes = 7;
         for (var i = 0; i < playerStacks.length; i++) {
             for (var j = 0; j < maxCubes; j++) {
-                $('#player-' + playerNo).append('<p class="cube ' + playerStacks[i][j].color+ ' ' + playerStacks[i][j].powerup + '">CUBE</p>');
+                $('#player-' + playerNo).prepend('<p class="cube ' + playerStacks[i][j].color + ' ' + playerStacks[i][j].powerup + '">CUBE</p>');
             }
         }
+    }
+
+    function keyCheck(keyPress) {
+        // Q - 113; A - 97; S - 115; W - 119;
+        switch (keyPress) {
+            case 113:
+
+                break;
+            case 97:
+                if (playerOneStacks[0][0].color === 'blue' || playerOneStacks[1][0].color === 'blue') {
+                    console.log('BLUE');
+                    removeCube(this);
+                }
+                break;
+            case 115:
+                if (playerOneStacks[0][0].color === 'green' || playerOneStacks[1][0].color === 'green') {
+                    console.log('GREEN');
+                    removeCube(this);
+                }
+                break;
+            case 119:
+                if (playerOneStacks[0][0].color === 'yellow' || playerOneStacks[1][0].color === 'yellow') {
+                    console.log('YELLOW');
+                    removeCube(this);
+                }
+                break;
+
+                // I - 105; K - 107; L - 108; O - 111;
+            case 105:
+                if (playerTwoStacks[0][0].color === 'red' || playerTwoStacks[1][0].color === 'red') {
+                    console.log('RED');
+                    removeCube(this);
+                }
+                break;
+            case 107:
+                if (playerTwoStacks[0][0].color === 'blue' || playerTwoStacks[1][0].color === 'blue') {
+                    console.log('BLUE');
+                    removeCube(this);
+                }
+                break;
+            case 108:
+                if (playerTwoStacks[0][0].color === 'green' || playerTwoStacks[1][0].color === 'green') {
+                    console.log('GREEN');
+                    removeCube(this);
+                }
+                break;
+            case 111:
+                if (playerTwoStacks[0][0].color === 'yellow' || playerTwoStacks[1][0].color === 'yellow') {
+                    console.log('YELLOW');
+                    removeCube(this);
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    function canRemoveCube() {
+        if (playerOneStacks[0][0].color === 'red' && playerOneStacks[1][0].color === 'red') {
+            console.log('RED');
+            removeCube(playerOneStacks[0][0]);
+            removeCube(playerOneStacks[1][0]);
+        } else if (playerOneStacks[0][0].color === 'red') {
+            removeCube(playerOneStacks[0][0]);
+        } else if (playerOneStacks[1][0].color === 'red') {
+            removeCube(playerOneStacks[1][0]);
+        }
+    }
+
+    function removeCube(cubePosition) {
+        console.log(cubePosition);
     }
 
     /* Initialises web page */
