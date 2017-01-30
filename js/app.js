@@ -2,6 +2,7 @@ $(function() {
     $(document).foundation();
 
     /* Variables */
+    var colors = ['red', 'blue', 'green', 'yellow'];
     var playerOneStacks = [];
     var playerTwoStacks = [];
 
@@ -66,7 +67,6 @@ $(function() {
         } */
         console.log("createStack()");
         var stack = [];
-        var colors = ['red', 'blue', 'green', 'yellow'];
         var colorMax = 3;
         for (var i = 0; i < 10; i++) {
             var newColor = colors[getRandom(0, colorMax)];
@@ -84,13 +84,15 @@ $(function() {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
-    /* Outputs and displays the cubes on the users screenm up-to the choosen value*/
+    /* Outputs and displays the cubes on the users screen up-to the choosen value */
     function displayStacks(playerNo, playerStacks) {
         var maxCubes = 7;
         for (var i = 0; i < playerStacks.length; i++) {
+            $('#player-' + playerNo).prepend('<ul id="' + playerNo + i + '">');
             for (var j = 0; j < maxCubes; j++) {
-                $('#player-' + playerNo).prepend('<p class="cube ' + playerStacks[i][j].color + ' ' + playerStacks[i][j].powerup + '">CUBE</p>');
+                $('ul#' + playerNo + i).prepend('<li class="cube ' + playerStacks[i][j].color + ' ' + playerStacks[i][j].powerup + '">CUBE</li>');
             }
+            $('#player-' + playerNo).append('</ul>');
         }
     }
 
@@ -98,66 +100,44 @@ $(function() {
         // Q - 113; A - 97; S - 115; W - 119;
         switch (keyPress) {
             case 113:
-
+                canRemoveCube(playerOneStacks, colors[0]); // Red
                 break;
             case 97:
-                if (playerOneStacks[0][0].color === 'blue' || playerOneStacks[1][0].color === 'blue') {
-                    console.log('BLUE');
-                    removeCube(this);
-                }
+                canRemoveCube(playerOneStacks, colors[1]); // Blue
                 break;
             case 115:
-                if (playerOneStacks[0][0].color === 'green' || playerOneStacks[1][0].color === 'green') {
-                    console.log('GREEN');
-                    removeCube(this);
-                }
+                canRemoveCube(playerOneStacks, colors[2]); // Green
                 break;
             case 119:
-                if (playerOneStacks[0][0].color === 'yellow' || playerOneStacks[1][0].color === 'yellow') {
-                    console.log('YELLOW');
-                    removeCube(this);
-                }
+                canRemoveCube(playerOneStacks, colors[3]); // Yellow
                 break;
 
                 // I - 105; K - 107; L - 108; O - 111;
             case 105:
-                if (playerTwoStacks[0][0].color === 'red' || playerTwoStacks[1][0].color === 'red') {
-                    console.log('RED');
-                    removeCube(this);
-                }
+                canRemoveCube(playerTwoStacks, colors[0]); // Red
                 break;
             case 107:
-                if (playerTwoStacks[0][0].color === 'blue' || playerTwoStacks[1][0].color === 'blue') {
-                    console.log('BLUE');
-                    removeCube(this);
-                }
+                canRemoveCube(playerTwoStacks, colors[1]); // Blue
                 break;
             case 108:
-                if (playerTwoStacks[0][0].color === 'green' || playerTwoStacks[1][0].color === 'green') {
-                    console.log('GREEN');
-                    removeCube(this);
-                }
+                canRemoveCube(playerTwoStacks, colors[2]); // Green
                 break;
             case 111:
-                if (playerTwoStacks[0][0].color === 'yellow' || playerTwoStacks[1][0].color === 'yellow') {
-                    console.log('YELLOW');
-                    removeCube(this);
-                }
+                canRemoveCube(playerTwoStacks, colors[3]); // Yellow
                 break;
             default:
                 break;
         }
     }
 
-    function canRemoveCube() {
-        if (playerOneStacks[0][0].color === 'red' && playerOneStacks[1][0].color === 'red') {
-            console.log('RED');
-            removeCube(playerOneStacks[0][0]);
-            removeCube(playerOneStacks[1][0]);
-        } else if (playerOneStacks[0][0].color === 'red') {
-            removeCube(playerOneStacks[0][0]);
-        } else if (playerOneStacks[1][0].color === 'red') {
-            removeCube(playerOneStacks[1][0]);
+    function canRemoveCube(player, color) {
+        if (player[0][0].color === color && player[1][0].color === color) {
+            removeCube(player[0][0]);
+            removeCube(player[1][0]);
+        } else if (player[0][0].color === color) {
+            removeCube(player[0][0]);
+        } else if (player[1][0].color === color) {
+            removeCube(player[1][0]);
         }
     }
 
