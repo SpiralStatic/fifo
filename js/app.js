@@ -16,8 +16,8 @@ $(function() {
         $('#play').on('click', function() {
             var settings = $('#menu').find('.active');
             startGame($(settings[0]).html(), $(settings[1]).html(), $(settings[2]).html());
-            $('#menu').slideToggle("slow");
-            $('#game').slideToggle("slow");
+            $('#menu').slideToggle('slow');
+            $('#game').slideToggle('slow');
         });
     }
 
@@ -34,6 +34,9 @@ $(function() {
 
         console.log("Player One: " + playerOneStacks);
         console.log("Player Two: " + playerTwoStacks);
+
+        displayStacks('one', playerOneStacks);
+        displayStacks('two', playerTwoStacks);
     }
 
     /* Sets up the game stacks */
@@ -47,7 +50,7 @@ $(function() {
         return stacks;
     }
 
-    /* Creates a stack */
+    /* Creates a stack full of cube objects and returns it*/
     function createStack() {
         /* cube = {
             color: 'color',
@@ -55,7 +58,7 @@ $(function() {
         } */
         console.log("createStack()");
         var stack = [];
-        var colors = ['Red', 'Blue', 'Green', 'Yellow'];
+        var colors = ['red', 'blue', 'green', 'yellow'];
         var colorMax = 3;
         for (var i = 0; i < 10; i++) {
             var newColor = colors[getRandom(0, colorMax)];
@@ -68,8 +71,19 @@ $(function() {
         return stack;
     }
 
+    /* Returns a random value between the min-max parameters */
     function getRandom(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    /* Outputs and displays the cubes on the users screenm up-to the choosen value*/
+    function displayStacks(playerNo, playerStacks) {
+        var maxCubes = 7;
+        for (var i = 0; i < playerStacks.length; i++) {
+            for (var j = 0; j < maxCubes; j++) {
+                $('#player-' + playerNo).append('<p class="cube ' + playerStacks[i][j].color+ ' ' + playerStacks[i][j].powerup + '">CUBE</p>');
+            }
+        }
     }
 
     /* Initialises web page */

@@ -122,6 +122,22 @@ main {
                 height: 65vh;
                 margin-bottom: 1%;
                 border-bottom: 4px solid $white;
+
+                .red {
+                    background-color: red;
+                }
+
+                .blue {
+                    background-color: blue;
+                }
+
+                .green {
+                    background-color: green;
+                }
+
+                .yellow {
+                    background-color: yellow;
+                }
             }
 
             div.player-controls {
