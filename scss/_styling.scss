@@ -119,12 +119,16 @@ main {
         div.player {
 
             div.player-section {
-                height: 80vh;
+                height: 70vh;
                 background-color: red;
             }
 
-            div.player-control {
+            div.player-controls {
                 height: 20vh;
+
+                a.round {
+                    border-radius: 100%;
+                }
             }
         }
     }
