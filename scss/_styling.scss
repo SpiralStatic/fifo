@@ -1,19 +1,22 @@
 //-----=GLOBALS=-----//
+html, body {
+    width: 100vw;
+    height: 100vh;
+}
 
 div.columns {
     padding: 0;
 }
 
 header {
+    height: 10vh;
     text-align: center;
 }
 
 main {
-    div.switch {
-        width: 100vw;
+    height: 90vh;
 
-        label.switch-paddle {
-            width: 100vw;
-        }
+    div.expanded {
+        margin: 25% 0;
     }
 }
