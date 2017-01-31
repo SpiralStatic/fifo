@@ -6,12 +6,9 @@ class FIFO {
         this.colors = ['red', 'blue', 'green', 'yellow'];
         this.stackType = 'Single';
 
-        $(() => {
-            const playerOne = new Player();
-        });
-        $(() => {
-            const PlayerTwo = new Player();
-        });
+        this.playerOne = new PlayerOne();
+        this.playerTwo = new PlayerTwo();
+
         this.addMenuListeners();
     }
 
@@ -50,39 +47,19 @@ class FIFO {
     /* Starts the game by taking the required settings */
     startGame(noOfStacks, similarity, powered) {
         console.log("startGame(" + noOfStacks + ", " + similarity + ", " + powered + ")");
-        this.playerOneStacks = this.stacksSetUp(noOfStacks);
+        this.playerOne.stacks = this.playerOne.stacksSetUp(noOfStacks);
         if (similarity === 'EQUAL') {
-            this.playerTwoStacks = this.copyArray(this.playerOneStacks);
+            this.playerTwo.stacks = this.copyArray(this.playerOne.stacks);
         } else {
-            this.playerTwoStacks = this.stacksSetUp(noOfStacks);
+            this.playerTwo.stacks = this.playerTwo.stacksSetUp(noOfStacks);
         }
-        this.playerOneStacks.player = 'one';
-        this.playerTwoStacks.player = 'two';
-        this.displayStacks('one', this.playerOneStacks);
-        this.displayStacks('two', this.playerTwoStacks);
-    }
-
-    /* Returns a random value between the min-max parameters */
-    getRandom(min, max) {
-        return Math.floor(Math.random() * (max - min + 1)) + min;
+        this.playerOne.stackElement = this.playerOne.displayStacks();
+        this.playerTwo.stackElement = this.playerTwo.displayStacks();
     }
 
     /* Copies over an array by parsing its objects to a new array */
     copyArray(original) {
         return JSON.parse(JSON.stringify(original));
-    }
-
-    /* Outputs and displays the cubes on the users screen up-to the choosen value */
-    displayStacks(playerNo, playerStacks) {
-        console.log("displayStacks(" + playerNo + ", " + playerStacks + ")");
-        let maxCubes = 7;
-        for (let i = 0; i < playerStacks.length; i++) {
-            $('#player-' + playerNo).append('<ul id="' + playerNo + i + '">');
-            for (let j = 0; j < maxCubes; j++) {
-                $('ul#' + playerNo + i).prepend('<li class="cube ' + playerStacks[i][j].color + ' ' + playerStacks[i][j].powerup + '"></li>');
-            }
-            $('#player-' + playerNo).append('</ul>');
-        }
     }
 
     /* Upon key press triggers function to check key to cube */
@@ -177,9 +154,10 @@ class FIFO {
 
 class Player {
     constructor() {
+        this.colors = ['red', 'blue', 'green', 'yellow'];
         this.stacks = [];
         this.points = 0;
-        this.stackElement = this.displayStacks();
+        this.stackElement = null;
     }
 
     /* Sets up the game stacks */
@@ -203,7 +181,7 @@ class Player {
         console.log("createStack()");
         let stack = [];
         let colorMax = 3;
-        for (let i = 0; i < 200; i++) {
+        for (let i = 0; i < 20; i++) {
             let newColor = this.colors[this.getRandom(0, colorMax)];
             stack.push({
                 color: newColor,
@@ -212,6 +190,79 @@ class Player {
         }
         //console.log(stack);
         return stack;
+    }
+
+    /* Outputs and displays the cubes on the users screen up-to the choosen value */
+    displayStacks() {
+        console.log("displayStacks(" + this.playerNo + ", " + this.stacks + ")");
+        let maxCubes = 7;
+        for (let i = 0; i < this.stacks.length; i++) {
+            $('#player-' + this.playerNo).append('<ul id="' + this.playerNo + i + '">');
+            for (let j = 0; j < maxCubes; j++) {
+                $('ul#' + this.playerNo + i).prepend('<li class="cube ' + this.stacks[i][j].color + ' ' + this.stacks[i][j].powerup + '"></li>');
+            }
+            $('#player-' + this.playerNo).append('</ul>');
+        }
+        return $('#player-' + this.playerNo);
+    }
+
+    /* Returns a random value between the min-max parameters */
+    getRandom(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+}
+
+class PlayerOne extends Player {
+    constructor() {
+        this.playerNo = 1;
+    }
+    
+    /* Upon key press triggers function to check key to cube */
+    keyCheck(keyPress) {
+        // Q - 113; W - 119 ; A - 97; S - 115;
+        switch (keyPress) {
+            case 113:
+                this.canRemoveCube(this.playerOneStacks, this.colors[0]); // Red
+                break;
+            case 97:
+                this.canRemoveCube(this.playerOneStacks, this.colors[1]); // Blue
+                break;
+            case 119:
+                this.canRemoveCube(this.playerOneStacks, this.colors[2]); // Green
+                break;
+            case 115:
+                this.canRemoveCube(this.playerOneStacks, this.colors[3]); // Yellow
+                break;
+            default:
+                break;
+        }
+    }
+}
+
+class PlayerTwo extends Player {
+    constructor() {
+        this.playerNo = 2;
+    }
+
+    /* Upon key press triggers function to check key to cube */
+    keyCheck(keyPress) {
+        // I - 105; O - 111; K - 107; L - 108;
+        switch (keyPress) {
+            case 105:
+                this.canRemoveCube(this.playerTwoStacks, this.colors[0]); // Red
+                break;
+            case 107:
+                this.canRemoveCube(this.playerTwoStacks, this.colors[1]); // Blue
+                break;
+            case 111:
+                this.canRemoveCube(this.playerTwoStacks, this.colors[2]); // Green
+                break;
+            case 108:
+                this.canRemoveCube(this.playerTwoStacks, this.colors[3]); // Yellow
+                break;
+            default:
+                break;
+        }
     }
 }
 
