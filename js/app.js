@@ -6,7 +6,10 @@ $(function() {
     var playerOneStacks = [];
     var playerTwoStacks = [];
     var stackType;
+    var playerOnePoints = 0;
+    var playerTwoPoints = 0;
 
+    /* Adds the game menu listeners to the options */
     function addMenuListeners() {
         console.log("addMenuListeners()");
         /* Toggles selected menu option value */
@@ -28,6 +31,7 @@ $(function() {
         });
     }
 
+    /* Adds the listeners for the game keys that are to be used */
     function addGameListeners() {
         // Q - 113; A - 97; S - 115; W - 119;
         // I - 105; K - 107; L - 108; O - 111;
@@ -45,6 +49,8 @@ $(function() {
         } else {
             playerTwoStacks = stacksSetUp(noOfStacks);
         }
+        playerOneStacks.player = 'one';
+        playerTwoStacks.player = 'two';
         displayStacks('one', playerOneStacks);
         displayStacks('two', playerTwoStacks);
     }
@@ -86,6 +92,7 @@ $(function() {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
+    /* Copies over an array by parsing its objects to a new array */
     function copyArray(original) {
         return JSON.parse(JSON.stringify(original));
     }
@@ -103,6 +110,7 @@ $(function() {
         }
     }
 
+    /* Upon key press triggers function to check key to cube */
     function keyCheck(keyPress) {
         // Q - 113; W - 119 ; A - 97; S - 115;
         switch (keyPress) {
@@ -136,26 +144,35 @@ $(function() {
         }
     }
 
-    function canRemoveCube(player, color) {
-        if (stackType === 'DOUBLE' && player[0][0].color === color && player[1][0].color === color) {
-            removeCube(player[0]);
-            removeCube(player[1]);
-            updateDisplay(player[0]);
-            updateDisplay(player[1]);
-        } else if (player[0][0].color === color) {
-            removeCube(player[0]);
-            updateDisplay(player[0]);
-        } else if (stackType === 'DOUBLE' && player[1][0].color === color) {
-            removeCube(player[1]);
-            updateDisplay(player[1]);
+    /* Checks if cube is same, and if so triggers removal and display update */
+    function canRemoveCube(playerStack, color) {
+        if (stackType === 'DOUBLE' && playerStack[0][0].color === color && playerStack[1][0].color === color) {
+            removeCube(playerStack[0]);
+            removeCube(playerStack[1]);
+            updateDisplay(playerStack[0]);
+            updateDisplay(playerStack[1]);
+            addPoints(playerStack.player);
+            addPoints(playerStack.player);
+        } else if (playerStack[0][0].color === color) {
+            removeCube(playerStack[0]);
+            updateDisplay(playerStack[0]);
+            addPoints(playerStack.player);
+        } else if (stackType === 'DOUBLE' && playerStack[1][0].color === color) {
+            removeCube(playerStack[1]);
+            updateDisplay(playerStack[1]);
+            addPoints(playerStack.player);
         }
+        console.log("one: " + playerOnePoints);
+        console.log("two: " + playerTwoPoints);
     }
 
+    // Removes a single cube from the front of an array */
     function removeCube(playerStack) {
         //console.log(playerStack);
         playerStack.shift();
     }
 
+    /* Updates the game display when cube is removed */
     function updateDisplay(playerStack) {
         var getCorrectHTMLStack;
 
@@ -168,9 +185,18 @@ $(function() {
         } else if (playerStack === playerTwoStacks[1]) {
             getCorrectHTMLStack = 'ul#two1';
         }
-        console.log(getCorrectHTMLStack);
+        //console.log(getCorrectHTMLStack);
         $(getCorrectHTMLStack + ' > .cube:last').remove();
         $(getCorrectHTMLStack).prepend('<li class="cube ' + playerStack[6].color + ' ' + playerStack[6].powerup + '">CUBE</li>');
+    }
+
+    /* Increments the players point value */
+    function addPoints(player) {
+        if(player === 'one') {
+            playerOnePoints++;
+        }else if(player === 'two') {
+            playerTwoPoints++;
+        }
     }
 
     /* Initialises web page */
