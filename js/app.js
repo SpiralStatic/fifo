@@ -5,7 +5,7 @@ class FIFO {
         /* Variables */
         this.colors = ['red', 'blue', 'green', 'yellow'];
         this.stackType = 'Single';
-        this.timer = 3; // Game Length
+        this.timer = 10; // Game Length (Seconds)
 
         this.playerOne = new PlayerOne();
         this.playerTwo = new PlayerTwo();
@@ -22,6 +22,7 @@ class FIFO {
             if (!$(event.target).hasClass('active')) {
                 $(event.target).siblings().removeClass('active');
                 $(event.target).addClass('active');
+                //toggleClass
             }
         });
 
@@ -51,11 +52,15 @@ class FIFO {
     startGame(noOfStacks, similarity, powered) {
         console.log("startGame(" + noOfStacks + ", " + similarity + ", " + powered + ")");
         this.playerOne.stacks = this.playerOne.stacksSetUp(noOfStacks);
-        if (similarity === 'EQUAL') {
-            this.playerTwo.stacks = this.copyArray(this.playerOne.stacks);
-        } else {
-            this.playerTwo.stacks = this.playerTwo.stacksSetUp(noOfStacks);
-        }
+        // if (similarity === 'EQUAL') {
+        //     this.playerTwo.stacks = this.copyArray(this.playerOne.stacks);
+        // } else {
+        //     this.playerTwo.stacks = this.playerTwo.stacksSetUp(noOfStacks);
+        // }
+
+        this.playerTwo.stacks = (similarity === 'EQUAL') ? this.copyArray(this.playerOne.stacks) : this.playerTwo.stacksSetUp(noOfStacks);
+
+
         this.playerOne.stackElement = this.playerOne.displayStacks();
         this.playerTwo.stackElement = this.playerTwo.displayStacks();
         this.startTimer();
@@ -67,8 +72,9 @@ class FIFO {
     }
 
     startTimer() {
-        const interval = setInterval(() => {
+        let interval = setInterval(() => {
             this.timer--;
+            $('#timer').html(this.timer);
             if(this.timer === 0) {
                 clearInterval(interval);
                 this.gameOver();
@@ -100,6 +106,7 @@ class Player {
         this.colors = ['red', 'blue', 'green', 'yellow'];
         this.stacks = [];
         this.points = 0;
+        // KEYPRESS MATRIX WOULD REMOVE NEED FOR EXTENSION
     }
 
     /* Sets up the game stacks */
@@ -138,13 +145,16 @@ class Player {
     displayStacks() {
         //console.log("displayStacks(" + this.playerNo + ", " + this.stacks + ")");
         const maxCubes = 7;
-        for (let i = 0; i < this.stacks.length; i++) {
-            $('#player-' + this.playerNo).append('<ul id="' + this.playerNo + i + '">');
-            for (let j = 0; j < maxCubes; j++) {
-                $('ul#' + this.playerNo + i).prepend('<li class="cube ' + this.stacks[i][j].color + ' ' + this.stacks[i][j].powerup + '"></li>');
-            }
-            $('#player-' + this.playerNo).append('</ul>');
-        }
+
+        $(this.stacks).each((i, stack) => {
+            $('#player-' + this.playerNo).append($('<ul></ul>').attr('id', `${this.playerNo}${i}`));
+            let count = 0;
+            stack.map((block) => {
+                if (count >=6) return;
+                count++;
+                $('ul#' + this.playerNo + i).prepend('<li class="cube ' + block.color + ' ' + block.powerup + '"></li>');
+            });
+        });
     }
 
     /* Returns a random value between the min-max parameters */
@@ -225,6 +235,8 @@ class PlayerOne extends Player {
             default:
                 break;
         }
+
+
     }
 }
 
