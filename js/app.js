@@ -4,12 +4,14 @@ class FIFO {
     constructor() {
         /* Variables */
         this.colors = ['red', 'blue', 'green', 'yellow'];
-        this.playerOneStacks = [];
-        this.playerTwoStacks = [];
         this.stackType = 'Single';
-        this.playerOnePoints = 0;
-        this.playerTwoPoints = 0;
 
+        $(() => {
+            const playerOne = new Player();
+        });
+        $(() => {
+            const PlayerTwo = new Player();
+        });
         this.addMenuListeners();
     }
 
@@ -58,38 +60,6 @@ class FIFO {
         this.playerTwoStacks.player = 'two';
         this.displayStacks('one', this.playerOneStacks);
         this.displayStacks('two', this.playerTwoStacks);
-    }
-
-    /* Sets up the game stacks */
-    stacksSetUp(noOfStacks) {
-        console.log("stacksSetUp(" + noOfStacks + ")");
-        let stackTypes = ['SINGLE', 'DOUBLE'];
-        this.stackType = noOfStacks;
-        let stacks = [];
-        for (let i = 0; i < stackTypes.indexOf(noOfStacks) + 1; i++) {
-            stacks.push(this.createStack());
-        }
-        return stacks;
-    }
-
-    /* Creates a stack full of cube objects and returns it*/
-    createStack() {
-        /* cube = {
-            color: 'color',
-            powerup: 'power-up'
-        } */
-        console.log("createStack()");
-        let stack = [];
-        let colorMax = 3;
-        for (let i = 0; i < 200; i++) {
-            let newColor = this.colors[this.getRandom(0, colorMax)];
-            stack.push({
-                color: newColor,
-                powerup: 'none'
-            });
-        }
-        //console.log(stack);
-        return stack;
     }
 
     /* Returns a random value between the min-max parameters */
@@ -208,6 +178,40 @@ class FIFO {
 class Player {
     constructor() {
         this.stacks = [];
+        this.points = 0;
+        this.stackElement = this.displayStacks();
+    }
+
+    /* Sets up the game stacks */
+    stacksSetUp(noOfStacks) {
+        console.log("stacksSetUp(" + noOfStacks + ")");
+        let stackTypes = ['SINGLE', 'DOUBLE'];
+        this.stackType = noOfStacks;
+        let stacks = [];
+        for (let i = 0; i < stackTypes.indexOf(noOfStacks) + 1; i++) {
+            stacks.push(this.createStack());
+        }
+        return stacks;
+    }
+
+    /* Creates a stack full of cube objects and returns it*/
+    createStack() {
+        /* cube = {
+            color: 'color',
+            powerup: 'power-up'
+        } */
+        console.log("createStack()");
+        let stack = [];
+        let colorMax = 3;
+        for (let i = 0; i < 200; i++) {
+            let newColor = this.colors[this.getRandom(0, colorMax)];
+            stack.push({
+                color: newColor,
+                powerup: 'none'
+            });
+        }
+        //console.log(stack);
+        return stack;
     }
 }
 
