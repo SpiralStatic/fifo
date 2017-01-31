@@ -69,7 +69,6 @@ class Player {
         this.colors = ['red', 'blue', 'green', 'yellow'];
         this.stacks = [];
         this.points = 0;
-        this.stackElement = null;
     }
 
     /* Sets up the game stacks */
@@ -92,8 +91,8 @@ class Player {
         } */
         console.log("createStack()");
         let stack = [];
-        let colorMax = 3;
-        for (let i = 0; i < 20; i++) {
+        const colorMax = 3;
+        for (let i = 0; i < 200; i++) {
             let newColor = this.colors[this.getRandom(0, colorMax)];
             stack.push({
                 color: newColor,
@@ -107,7 +106,7 @@ class Player {
     /* Outputs and displays the cubes on the users screen up-to the choosen value */
     displayStacks() {
         console.log("displayStacks(" + this.playerNo + ", " + this.stacks + ")");
-        let maxCubes = 7;
+        const maxCubes = 7;
         for (let i = 0; i < this.stacks.length; i++) {
             $('#player-' + this.playerNo).append('<ul id="' + this.playerNo + i + '">');
             for (let j = 0; j < maxCubes; j++) {
@@ -115,8 +114,6 @@ class Player {
             }
             $('#player-' + this.playerNo).append('</ul>');
         }
-        //console.log($('#player-' + this.playerNo));
-        return $('#player-' + this.playerNo);
     }
 
     /* Returns a random value between the min-max parameters */
@@ -145,9 +142,9 @@ class Player {
     }
 
     // Removes a single cube from the front of an array */
-    removeCube(playerStack) {
+    removeCube(stack) {
         //console.log(playerStack);
-        playerStack.shift();
+        stack.shift();
     }
 
     /* Updates the game display when cube is removed */
@@ -155,13 +152,15 @@ class Player {
         var getCorrectHTMLStack;
 
         if (stack === this.stacks[0]) {
-            getCorrectHTMLStack = 'ul#one0';
+            getCorrectHTMLStack = 'ul#' + this.playerNo + '0';
+            $(getCorrectHTMLStack + ' > .cube:last').remove();
+            $(getCorrectHTMLStack).prepend('<li class="cube ' + this.stacks[0][6].color + ' ' + this.stacks[0][6].powerup + '"></li>');
         } else if (stack === this.stacks[1]) {
-            getCorrectHTMLStack = 'ul#one1';
+            getCorrectHTMLStack = 'ul#' + this.playerNo + '1';
+            $(getCorrectHTMLStack + ' > .cube:last').remove();
+            $(getCorrectHTMLStack).prepend('<li class="cube ' + this.stacks[1][6].color + ' ' + this.stacks[1][6].powerup + '"></li>');
         }
         //console.log(getCorrectHTMLStack);
-        $(getCorrectHTMLStack + ' > .cube:last').remove();
-        $(getCorrectHTMLStack).prepend('<li class="cube ' + this.stacks[6].color + ' ' + this.stacks[6].powerup + '"></li>');
     }
 
     /* Increments the players point value */
@@ -181,16 +180,16 @@ class PlayerOne extends Player {
         // Q - 113; W - 119 ; A - 97; S - 115;
         switch (keyPress) {
             case 113:
-                this.canRemoveCube(this.stacks, this.colors[0]); // Red
+                this.canRemoveCube(this.colors[0]); // Red
                 break;
             case 97:
-                this.canRemoveCube(this.stacks, this.colors[1]); // Blue
+                this.canRemoveCube(this.colors[1]); // Blue
                 break;
             case 119:
-                this.canRemoveCube(this.stacks, this.colors[2]); // Green
+                this.canRemoveCube(this.colors[2]); // Green
                 break;
             case 115:
-                this.canRemoveCube(this.stacks, this.colors[3]); // Yellow
+                this.canRemoveCube(this.colors[3]); // Yellow
                 break;
             default:
                 break;
@@ -209,16 +208,16 @@ class PlayerTwo extends Player {
         // I - 105; O - 111; K - 107; L - 108;
         switch (keyPress) {
             case 105:
-                this.canRemoveCube(this.stacks, this.colors[0]); // Red
+                this.canRemoveCube(this.colors[0]); // Red
                 break;
             case 107:
-                this.canRemoveCube(this.stacks, this.colors[1]); // Blue
+                this.canRemoveCube(this.colors[1]); // Blue
                 break;
             case 111:
-                this.canRemoveCube(this.stacks, this.colors[2]); // Green
+                this.canRemoveCube(this.colors[2]); // Green
                 break;
             case 108:
-                this.canRemoveCube(this.stacks, this.colors[3]); // Yellow
+                this.canRemoveCube(this.colors[3]); // Yellow
                 break;
             default:
                 break;
