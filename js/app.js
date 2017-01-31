@@ -1,4 +1,4 @@
-$(function() {
+$(() => {
     $(document).foundation();
 
     /* Variables */
@@ -13,16 +13,17 @@ $(function() {
     function addMenuListeners() {
         console.log("addMenuListeners()");
         /* Toggles selected menu option value */
-        $('.button-group').children().on('click', function() {
-            if (!$(this).hasClass('active')) {
-                $(this).siblings().removeClass('active');
-                $(this).addClass('active');
+        $('.button-group').children().on('click', (event) => {
+            console.log(event.target);
+            if (!$(event.target).hasClass('active')) {
+                $(event.target).siblings().removeClass('active');
+                $(event.target).addClass('active');
             }
         });
 
         /* When play is pressed, gets the menu option values, then switches to game */
         $('#game').hide();
-        $('#play').on('click', function() {
+        $('#play').on('click', () => {
             var settings = $('#menu').find('.active');
             startGame($(settings[0]).html(), $(settings[1]).html(), $(settings[2]).html());
             $('#menu').slideToggle('slow');
@@ -104,7 +105,7 @@ $(function() {
         for (var i = 0; i < playerStacks.length; i++) {
             $('#player-' + playerNo).append('<ul id="' + playerNo + i + '">');
             for (var j = 0; j < maxCubes; j++) {
-                $('ul#' + playerNo + i).prepend('<li class="cube ' + playerStacks[i][j].color + ' ' + playerStacks[i][j].powerup + '">CUBE</li>');
+                $('ul#' + playerNo + i).prepend('<li class="cube ' + playerStacks[i][j].color + ' ' + playerStacks[i][j].powerup + '"></li>');
             }
             $('#player-' + playerNo).append('</ul>');
         }
@@ -187,7 +188,7 @@ $(function() {
         }
         //console.log(getCorrectHTMLStack);
         $(getCorrectHTMLStack + ' > .cube:last').remove();
-        $(getCorrectHTMLStack).prepend('<li class="cube ' + playerStack[6].color + ' ' + playerStack[6].powerup + '">CUBE</li>');
+        $(getCorrectHTMLStack).prepend('<li class="cube ' + playerStack[6].color + ' ' + playerStack[6].powerup + '"></li>');
     }
 
     /* Increments the players point value */
@@ -206,3 +207,9 @@ $(function() {
 
     initialise();
 });
+
+
+// Change all vars to lets or consts
+// Change all anonymous functions to arrow syntax
+
+// OOP

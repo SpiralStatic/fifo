@@ -130,6 +130,9 @@ main {
 
                     li {
                         list-style: none;
+                        height: 7vh;
+                        width: 7vh;
+                        border: 4px outset rgba(0, 0, 0, 0.5);
                     }
                 }
             }
@@ -144,6 +147,7 @@ main {
                     a.round {
                         margin: 0 5%;
                         border-radius: 100%;
+                        border: 4px outset rgba(0, 0, 0, 0.5);
                     }
                 }
             }
