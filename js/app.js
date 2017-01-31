@@ -40,7 +40,8 @@ class FIFO {
         // Q - 113; A - 97; S - 115; W - 119;
         // I - 105; K - 107; L - 108; O - 111;
         $(document).bind('keypress', (event) => {
-            this.keyCheck(event.keyCode);
+            this.playerOne.keyCheck(event.keyCode);
+            this.playerTwo.keyCheck(event.keyCode);
         });
     }
 
@@ -60,95 +61,6 @@ class FIFO {
     /* Copies over an array by parsing its objects to a new array */
     copyArray(original) {
         return JSON.parse(JSON.stringify(original));
-    }
-
-    /* Upon key press triggers function to check key to cube */
-    keyCheck(keyPress) {
-        // Q - 113; W - 119 ; A - 97; S - 115;
-        switch (keyPress) {
-            case 113:
-                this.canRemoveCube(this.playerOneStacks, this.colors[0]); // Red
-                break;
-            case 97:
-                this.canRemoveCube(this.playerOneStacks, this.colors[1]); // Blue
-                break;
-            case 119:
-                this.canRemoveCube(this.playerOneStacks, this.colors[2]); // Green
-                break;
-            case 115:
-                this.canRemoveCube(this.playerOneStacks, this.colors[3]); // Yellow
-                break;
-                // I - 105; O - 111; K - 107; L - 108;
-            case 105:
-                this.canRemoveCube(this.playerTwoStacks, this.colors[0]); // Red
-                break;
-            case 107:
-                this.canRemoveCube(this.playerTwoStacks, this.colors[1]); // Blue
-                break;
-            case 111:
-                this.canRemoveCube(this.playerTwoStacks, this.colors[2]); // Green
-                break;
-            case 108:
-                this.canRemoveCube(this.playerTwoStacks, this.colors[3]); // Yellow
-                break;
-            default:
-                break;
-        }
-    }
-
-    /* Checks if cube is same, and if so triggers removal and display update */
-    canRemoveCube(playerStack, color) {
-        if (this.stackType === 'DOUBLE' && playerStack[0][0].color === color && playerStack[1][0].color === color) {
-            this.removeCube(playerStack[0]);
-            this.removeCube(playerStack[1]);
-            this.updateDisplay(playerStack[0]);
-            this.updateDisplay(playerStack[1]);
-            this.addPoints(playerStack.player);
-            this.addPoints(playerStack.player);
-        } else if (playerStack[0][0].color === color) {
-            this.removeCube(playerStack[0]);
-            this.updateDisplay(playerStack[0]);
-            this.addPoints(playerStack.player);
-        } else if (this.stackType === 'DOUBLE' && playerStack[1][0].color === color) {
-            this.removeCube(playerStack[1]);
-            this.updateDisplay(playerStack[1]);
-            this.addPoints(playerStack.player);
-        }
-        console.log("one: " + this.playerOnePoints);
-        console.log("two: " + this.playerTwoPoints);
-    }
-
-    // Removes a single cube from the front of an array */
-    removeCube(playerStack) {
-        //console.log(playerStack);
-        playerStack.shift();
-    }
-
-    /* Updates the game display when cube is removed */
-    updateDisplay(playerStack) {
-        var getCorrectHTMLStack;
-
-        if (playerStack === this.playerOneStacks[0]) {
-            getCorrectHTMLStack = 'ul#one0';
-        } else if (playerStack === this.playerOneStacks[1]) {
-            getCorrectHTMLStack = 'ul#one1';
-        } else if (playerStack === this.playerTwoStacks[0]) {
-            getCorrectHTMLStack = 'ul#two0';
-        } else if (playerStack === this.playerTwoStacks[1]) {
-            getCorrectHTMLStack = 'ul#two1';
-        }
-        //console.log(getCorrectHTMLStack);
-        $(getCorrectHTMLStack + ' > .cube:last').remove();
-        $(getCorrectHTMLStack).prepend('<li class="cube ' + playerStack[6].color + ' ' + playerStack[6].powerup + '"></li>');
-    }
-
-    /* Increments the players point value */
-    addPoints(player) {
-        if (player === 'one') {
-            this.playerOnePoints++;
-        } else if (player === 'two') {
-            this.playerTwoPoints++;
-        }
     }
 }
 
@@ -203,6 +115,7 @@ class Player {
             }
             $('#player-' + this.playerNo).append('</ul>');
         }
+        //console.log($('#player-' + this.playerNo));
         return $('#player-' + this.playerNo);
     }
 
@@ -210,28 +123,74 @@ class Player {
     getRandom(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
+
+    /* Checks if cube is same, and if so triggers removal and display update */
+    canRemoveCube(color) {
+        if (this.stackType === 'DOUBLE' && this.stacks[0][0].color === color && this.stacks[1][0].color === color) {
+            this.removeCube(this.stacks[0]);
+            this.removeCube(this.stacks[1]);
+            this.updateDisplay(this.stacks[0]);
+            this.updateDisplay(this.stacks[1]);
+            this.addPoints();
+            this.addPoints();
+        } else if (this.stacks[0][0].color === color) {
+            this.removeCube(this.stacks[0]);
+            this.updateDisplay(this.stacks[0]);
+            this.addPoints();
+        } else if (this.stackType === 'DOUBLE' && this.stacks[1][0].color === color) {
+            this.removeCube(this.stacks[1]);
+            this.updateDisplay(this.stacks[1]);
+            this.addPoints();
+        }
+    }
+
+    // Removes a single cube from the front of an array */
+    removeCube(playerStack) {
+        //console.log(playerStack);
+        playerStack.shift();
+    }
+
+    /* Updates the game display when cube is removed */
+    updateDisplay(stack) {
+        var getCorrectHTMLStack;
+
+        if (stack === this.stacks[0]) {
+            getCorrectHTMLStack = 'ul#one0';
+        } else if (stack === this.stacks[1]) {
+            getCorrectHTMLStack = 'ul#one1';
+        }
+        //console.log(getCorrectHTMLStack);
+        $(getCorrectHTMLStack + ' > .cube:last').remove();
+        $(getCorrectHTMLStack).prepend('<li class="cube ' + this.stacks[6].color + ' ' + this.stacks[6].powerup + '"></li>');
+    }
+
+    /* Increments the players point value */
+    addPoints() {
+        this.points++;
+    }
 }
 
 class PlayerOne extends Player {
     constructor() {
+        super();
         this.playerNo = 1;
     }
-    
+
     /* Upon key press triggers function to check key to cube */
     keyCheck(keyPress) {
         // Q - 113; W - 119 ; A - 97; S - 115;
         switch (keyPress) {
             case 113:
-                this.canRemoveCube(this.playerOneStacks, this.colors[0]); // Red
+                this.canRemoveCube(this.stacks, this.colors[0]); // Red
                 break;
             case 97:
-                this.canRemoveCube(this.playerOneStacks, this.colors[1]); // Blue
+                this.canRemoveCube(this.stacks, this.colors[1]); // Blue
                 break;
             case 119:
-                this.canRemoveCube(this.playerOneStacks, this.colors[2]); // Green
+                this.canRemoveCube(this.stacks, this.colors[2]); // Green
                 break;
             case 115:
-                this.canRemoveCube(this.playerOneStacks, this.colors[3]); // Yellow
+                this.canRemoveCube(this.stacks, this.colors[3]); // Yellow
                 break;
             default:
                 break;
@@ -241,6 +200,7 @@ class PlayerOne extends Player {
 
 class PlayerTwo extends Player {
     constructor() {
+        super();
         this.playerNo = 2;
     }
 
@@ -249,16 +209,16 @@ class PlayerTwo extends Player {
         // I - 105; O - 111; K - 107; L - 108;
         switch (keyPress) {
             case 105:
-                this.canRemoveCube(this.playerTwoStacks, this.colors[0]); // Red
+                this.canRemoveCube(this.stacks, this.colors[0]); // Red
                 break;
             case 107:
-                this.canRemoveCube(this.playerTwoStacks, this.colors[1]); // Blue
+                this.canRemoveCube(this.stacks, this.colors[1]); // Blue
                 break;
             case 111:
-                this.canRemoveCube(this.playerTwoStacks, this.colors[2]); // Green
+                this.canRemoveCube(this.stacks, this.colors[2]); // Green
                 break;
             case 108:
-                this.canRemoveCube(this.playerTwoStacks, this.colors[3]); // Yellow
+                this.canRemoveCube(this.stacks, this.colors[3]); // Yellow
                 break;
             default:
                 break;
