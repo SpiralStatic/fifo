@@ -141,7 +141,7 @@ main {
                     }
                 }
             }
-            
+
             div#player-1 {
                 float: left;
             }
@@ -159,7 +159,14 @@ main {
                     margin: 0;
 
                     a.round {
-                        margin: 0 5%;
+                        height: 6vh;
+                        width: 6vh;
+                        padding: 0;
+                        margin: 3%;
+                        font-size: 22px;
+                        font-weight: bold;
+                        color: $white;
+                        line-height: 6vh;
                         border-radius: 100%;
                         border: 4px outset rgba(0, 0, 0, 0.5);
                     }
