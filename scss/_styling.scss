@@ -117,16 +117,21 @@ main {
 
     div#game {
         div.player {
+            display: inline-block;
 
             div.player-section {
+                display: inline-block;
                 height: 65vh;
-                margin-bottom: 1%;
+                width: 100%;
                 border-bottom: 4px solid $white;
+                text-align: center;
+                padding: 0 10%;
 
                 ul {
                     display: inline-block;
                     float: left;
-                    width: 33.33%;
+                    width: 42%;
+                    margin: 0 4%;
 
                     li {
                         list-style: none;
@@ -136,9 +141,18 @@ main {
                     }
                 }
             }
+            
+            div#player-1 {
+                float: left;
+            }
+
+            div#player-2 {
+                float: right;
+            }
 
             div.player-controls {
                 height: 35vh;
+                margin-top: 1%;
 
                 div.button-group {
                     text-align: center;
@@ -151,20 +165,32 @@ main {
                     }
                 }
             }
+
             .red {
-                background-color: red;
+                background-color: $alert-color;
             }
 
             .blue {
-                background-color: blue;
+                background-color: $primary-color;
             }
 
             .green {
-                background-color: green;
+                background-color: $success-color;
             }
 
             .yellow {
-                background-color: yellow;
+                background-color: $warning-color;
+            }
+        }
+    }
+}
+@media only screen and (min-width: 425px) {
+    body {
+        div#game {
+            div.player {
+                div.player-section {
+                    padding: 0 25%;
+                }
             }
         }
     }

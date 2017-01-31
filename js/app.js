@@ -105,7 +105,7 @@ class Player {
 
     /* Outputs and displays the cubes on the users screen up-to the choosen value */
     displayStacks() {
-        console.log("displayStacks(" + this.playerNo + ", " + this.stacks + ")");
+        //console.log("displayStacks(" + this.playerNo + ", " + this.stacks + ")");
         const maxCubes = 7;
         for (let i = 0; i < this.stacks.length; i++) {
             $('#player-' + this.playerNo).append('<ul id="' + this.playerNo + i + '">');
