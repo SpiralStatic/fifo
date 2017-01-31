@@ -5,7 +5,7 @@ $(function() {
     var colors = ['red', 'blue', 'green', 'yellow'];
     var playerOneStacks = [];
     var playerTwoStacks = [];
-    var noOfStacks;
+    var stackType;
 
     function addMenuListeners() {
         console.log("addMenuListeners()");
@@ -39,7 +39,6 @@ $(function() {
     /* Starts the game by taking the required settings */
     function startGame(noOfStacks, similarity, powered) {
         console.log("startGame(" + noOfStacks + ", " + similarity + ", " + powered + ")");
-        noOfStacks = noOfStacks;
         playerOneStacks = stacksSetUp(noOfStacks);
         if (similarity === 'EQUAL') {
             playerTwoStacks = playerOneStacks;
@@ -52,8 +51,9 @@ $(function() {
 
     /* Sets up the game stacks */
     function stacksSetUp(noOfStacks) {
-        console.log("stacksSetUp()");
+        console.log("stacksSetUp(" + noOfStacks + ")");
         var stackTypes = ['SINGLE', 'DOUBLE'];
+        stackType = noOfStacks;
         var stacks = [];
         for (var i = 0; i < stackTypes.indexOf(noOfStacks) + 1; i++) {
             stacks.push(createStack());
@@ -70,14 +70,14 @@ $(function() {
         console.log("createStack()");
         var stack = [];
         var colorMax = 3;
-        for (var i = 0; i < 200; i++) {
+        for (var i = 0; i < 20; i++) {
             var newColor = colors[getRandom(0, colorMax)];
             stack.push({
                 color: newColor,
                 powerup: 'none'
             });
         }
-        console.log(stack);
+        //console.log(stack);
         return stack;
     }
 
@@ -88,6 +88,7 @@ $(function() {
 
     /* Outputs and displays the cubes on the users screen up-to the choosen value */
     function displayStacks(playerNo, playerStacks) {
+        console.log("displayStacks(" + playerNo + ", " + playerStacks + ")");
         var maxCubes = 7;
         for (var i = 0; i < playerStacks.length; i++) {
             $('#player-' + playerNo).append('<ul id="' + playerNo + i + '">');
@@ -132,28 +133,40 @@ $(function() {
     }
 
     function canRemoveCube(player, color) {
-        if (noOfStacks === 'DOUBLE' && player[0][0].color === color && player[1][0].color === color) {
+        if (stackType === 'DOUBLE' && player[0][0].color === color && player[1][0].color === color) {
             removeCube(player[0]);
             removeCube(player[1]);
             updateDisplay(player[0]);
+            updateDisplay(player[1]);
         } else if (player[0][0].color === color) {
             removeCube(player[0]);
             updateDisplay(player[0]);
-        } else if (noOfStacks === 'DOUBLE' && player[1][0].color === color) {
+        } else if (stackType === 'DOUBLE' && player[1][0].color === color) {
             removeCube(player[1]);
             updateDisplay(player[1]);
         }
     }
 
     function removeCube(playerStack) {
-        console.log(playerStack);
+        //console.log(playerStack);
         playerStack.shift();
     }
-    
-    function updateDisplay(playerStack) {
-        $('ul#one0 > .cube:last').remove();
 
-        $('ul#one0').prepend('<li class="cube ' + playerStack[6].color + ' ' + playerStack[6].powerup + '">CUBE</li>');
+    function updateDisplay(playerStack) {
+        var getCorrectHTMLStack;
+
+        if(playerStack === playerOneStacks[0]) {
+            getCorrectHTMLStack = 'ul#one0';
+        }else if (playerStack === playerOneStacks[1]) {
+            getCorrectHTMLStack = 'ul#one1';
+        }else if (playerStack === playerTwoStacks[0]) {
+            getCorrectHTMLStack = 'ul#two0';
+        }else if (playerStack === playerTwoStacks[1]) {
+            getCorrectHTMLStack = 'ul#two1';
+        }
+        console.log(getCorrectHTMLStack);
+        $(getCorrectHTMLStack + ' > .cube:last').remove();
+        $(getCorrectHTMLStack).prepend('<li class="cube ' + playerStack[6].color + ' ' + playerStack[6].powerup + '">CUBE</li>');
     }
 
     /* Initialises web page */
