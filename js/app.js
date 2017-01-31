@@ -5,6 +5,7 @@ $(function() {
     var colors = ['red', 'blue', 'green', 'yellow'];
     var playerOneStacks = [];
     var playerTwoStacks = [];
+    var noOfStacks;
 
     function addMenuListeners() {
         console.log("addMenuListeners()");
@@ -38,6 +39,7 @@ $(function() {
     /* Starts the game by taking the required settings */
     function startGame(noOfStacks, similarity, powered) {
         console.log("startGame(" + noOfStacks + ", " + similarity + ", " + powered + ")");
+        noOfStacks = noOfStacks;
         playerOneStacks = stacksSetUp(noOfStacks);
         if (similarity === 'EQUAL') {
             playerTwoStacks = playerOneStacks;
@@ -68,7 +70,7 @@ $(function() {
         console.log("createStack()");
         var stack = [];
         var colorMax = 3;
-        for (var i = 0; i < 10; i++) {
+        for (var i = 0; i < 200; i++) {
             var newColor = colors[getRandom(0, colorMax)];
             stack.push({
                 color: newColor,
@@ -88,7 +90,7 @@ $(function() {
     function displayStacks(playerNo, playerStacks) {
         var maxCubes = 7;
         for (var i = 0; i < playerStacks.length; i++) {
-            $('#player-' + playerNo).prepend('<ul id="' + playerNo + i + '">');
+            $('#player-' + playerNo).append('<ul id="' + playerNo + i + '">');
             for (var j = 0; j < maxCubes; j++) {
                 $('ul#' + playerNo + i).prepend('<li class="cube ' + playerStacks[i][j].color + ' ' + playerStacks[i][j].powerup + '">CUBE</li>');
             }
@@ -97,7 +99,7 @@ $(function() {
     }
 
     function keyCheck(keyPress) {
-        // Q - 113; A - 97; S - 115; W - 119;
+        // Q - 113; W - 119 ; A - 97; S - 115;
         switch (keyPress) {
             case 113:
                 canRemoveCube(playerOneStacks, colors[0]); // Red
@@ -105,23 +107,23 @@ $(function() {
             case 97:
                 canRemoveCube(playerOneStacks, colors[1]); // Blue
                 break;
-            case 115:
+            case 119:
                 canRemoveCube(playerOneStacks, colors[2]); // Green
                 break;
-            case 119:
+            case 115:
                 canRemoveCube(playerOneStacks, colors[3]); // Yellow
                 break;
-                // I - 105; K - 107; L - 108; O - 111;
+                // I - 105; O - 111; K - 107; L - 108;
             case 105:
                 canRemoveCube(playerTwoStacks, colors[0]); // Red
                 break;
             case 107:
                 canRemoveCube(playerTwoStacks, colors[1]); // Blue
                 break;
-            case 108:
+            case 111:
                 canRemoveCube(playerTwoStacks, colors[2]); // Green
                 break;
-            case 111:
+            case 108:
                 canRemoveCube(playerTwoStacks, colors[3]); // Yellow
                 break;
             default:
@@ -130,24 +132,28 @@ $(function() {
     }
 
     function canRemoveCube(player, color) {
-        if (player[0][0].color === color && player[1][0].color === color) {
+        if (noOfStacks === 'DOUBLE' && player[0][0].color === color && player[1][0].color === color) {
             removeCube(player[0]);
             removeCube(player[1]);
+            updateDisplay(player[0]);
         } else if (player[0][0].color === color) {
             removeCube(player[0]);
-        } else if (player[1][0].color === color) {
+            updateDisplay(player[0]);
+        } else if (noOfStacks === 'DOUBLE' && player[1][0].color === color) {
             removeCube(player[1]);
+            updateDisplay(player[1]);
         }
     }
 
-    function removeCube(array) {
-        console.log(cubePosition);
-        array.shift();
-        updateDisplay();
+    function removeCube(playerStack) {
+        console.log(playerStack);
+        playerStack.shift();
     }
+    
+    function updateDisplay(playerStack) {
+        $('ul#one0 > .cube:last').remove();
 
-    function updateDisplay() {
-        
+        $('ul#one0').prepend('<li class="cube ' + playerStack[6].color + ' ' + playerStack[6].powerup + '">CUBE</li>');
     }
 
     /* Initialises web page */
