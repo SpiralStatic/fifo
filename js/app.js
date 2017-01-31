@@ -41,7 +41,7 @@ $(function() {
         console.log("startGame(" + noOfStacks + ", " + similarity + ", " + powered + ")");
         playerOneStacks = stacksSetUp(noOfStacks);
         if (similarity === 'EQUAL') {
-            playerTwoStacks = playerOneStacks;
+            playerTwoStacks = copyArray(playerOneStacks);
         } else {
             playerTwoStacks = stacksSetUp(noOfStacks);
         }
@@ -84,6 +84,10 @@ $(function() {
     /* Returns a random value between the min-max parameters */
     function getRandom(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function copyArray(original) {
+        return JSON.parse(JSON.stringify(original));
     }
 
     /* Outputs and displays the cubes on the users screen up-to the choosen value */
@@ -155,13 +159,13 @@ $(function() {
     function updateDisplay(playerStack) {
         var getCorrectHTMLStack;
 
-        if(playerStack === playerOneStacks[0]) {
+        if (playerStack === playerOneStacks[0]) {
             getCorrectHTMLStack = 'ul#one0';
-        }else if (playerStack === playerOneStacks[1]) {
+        } else if (playerStack === playerOneStacks[1]) {
             getCorrectHTMLStack = 'ul#one1';
-        }else if (playerStack === playerTwoStacks[0]) {
+        } else if (playerStack === playerTwoStacks[0]) {
             getCorrectHTMLStack = 'ul#two0';
-        }else if (playerStack === playerTwoStacks[1]) {
+        } else if (playerStack === playerTwoStacks[1]) {
             getCorrectHTMLStack = 'ul#two1';
         }
         console.log(getCorrectHTMLStack);
