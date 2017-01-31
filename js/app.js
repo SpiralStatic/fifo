@@ -77,6 +77,19 @@ class FIFO {
     }
 
     gameOver() {
+        if(this.playerOne.points === this.playerTwo.points) {
+            $('#gameover').find('h3').html("ITS A DRAW");
+            $('#gameover').find('p:first').html("P1 SCORE: " + this.playerOne.points);
+            $('#gameover').find('p:last').html("P2 SCORE: " + this.playerTwo.points);
+        }else if(this.playerOne.points > this.playerTwo.points) {
+            $('#gameover').find('h3').html("P1 WINS!");
+            $('#gameover').find('p:first').html("P1 SCORE: " + this.playerOne.points);
+            $('#gameover').find('p:last').html("P2 SCORE: " + this.playerTwo.points);
+        }else if(this.playerOne.points < this.playerTwo.points) {
+            $('#gameover').find('h3').html("P2 WINS!");
+            $('#gameover').find('p:first').html("P1 SCORE: " + this.playerOne.points);
+            $('#gameover').find('p:last').html("P2 SCORE: " + this.playerTwo.points);
+        }
         $('#game').slideToggle('slow');
         $('#gameover').slideToggle('slow');
     }
