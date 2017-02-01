@@ -5,7 +5,7 @@ class FIFO {
         /* Variables */
         this.colors = ['red', 'blue', 'green', 'yellow'];
         this.stackType = 'Single';
-        this.timer = 10; // Game Length (Seconds)
+        this.timer = 45; // Game Length (Seconds)
 
         this.playerOne = new PlayerOne();
         this.playerTwo = new PlayerTwo();
@@ -60,9 +60,10 @@ class FIFO {
 
         this.playerTwo.stacks = (similarity === 'EQUAL') ? this.copyArray(this.playerOne.stacks) : this.playerTwo.stacksSetUp(noOfStacks);
 
+        $([this.playerOne, this.playerTwo]).each((i, stack) => {
+            stack.stackElement = stack.displayStacks();
+        });
 
-        this.playerOne.stackElement = this.playerOne.displayStacks();
-        this.playerTwo.stackElement = this.playerTwo.displayStacks();
         this.startTimer();
     }
 
@@ -150,7 +151,7 @@ class Player {
             $('#player-' + this.playerNo).append($('<ul></ul>').attr('id', `${this.playerNo}${i}`));
             let count = 0;
             stack.map((block) => {
-                if (count >=6) return;
+                if (count >=maxCubes) return;
                 count++;
                 $('ul#' + this.playerNo + i).prepend('<li class="cube ' + block.color + ' ' + block.powerup + '"></li>');
             });
