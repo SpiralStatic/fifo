@@ -5,6 +5,8 @@ class FIFO {
         this.stackType = 'SINGLE';
         this.timer = 10; // Game Length (Seconds)
         this.addMenuListeners();
+        this.addGameListeners();
+        this.addGameOverListeners();
         this.settings = [];
     }
 
@@ -33,7 +35,6 @@ class FIFO {
             this.startGame();
             $('#menu').slideToggle('slow');
             $('#game').slideToggle('slow');
-            this.addGameListeners();
         });
     }
 
@@ -55,7 +56,10 @@ class FIFO {
             this.startGame();
         });
         $('#newgame').on('click', () => {
-
+            $('#menu').slideToggle('slow');
+            $('#gameover').slideToggle('slow');
+            this.settings.length = 0;
+            this.resetGame();
         });
     }
 
@@ -102,8 +106,6 @@ class FIFO {
 
         $('#game').slideToggle('slow');
         $('#gameover').slideToggle('slow');
-
-        this.addGameOverListeners();
     }
 
     resetGame() {
