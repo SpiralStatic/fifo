@@ -5,7 +5,7 @@ class Player {
         this.points = 0;
         this.pointsElement = null;
         this.playerNo = playerNo;
-        this.pointsElement = $(`p${playerNo}score`);
+        this.pointsElement = $(`#p${playerNo}score`);
         this.keys = keys;
         this.game = game;
     }
@@ -104,8 +104,7 @@ class Player {
 
     // Removes a single cube from the front of an array */
     removeCube(stack) {
-        //console.log(playerStack);
-        console.log(stack);
+        //console.log(stack);
         stack.shift();
     }
 
@@ -128,5 +127,7 @@ class Player {
     /* Increments the players point value */
     addPoints() {
         this.points++;
+        console.log(this.pointsElement, this.points);
+        $(this.pointsElement).html(this.points);
     }
 }
