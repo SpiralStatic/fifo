@@ -3,11 +3,13 @@ class FIFO {
         /* Variables */
         this.colors = ['red', 'blue', 'green', 'yellow'];
         this.stackType = 'SINGLE';
-        this.timer = 2; // Game Length (Seconds)
+        this.timer = 10; // Game Length (Seconds)
         this.addMenuListeners();
         this.addGameListeners();
         this.addGameOverListeners();
         this.settings = [];
+        this.soundtrack = $('#soundtrack')[0];
+        this.isPlaying = true;
     }
 
     /* Adds the game menu listeners to the options */
@@ -36,6 +38,9 @@ class FIFO {
             $('#menu').slideToggle('slow');
             $('#game').slideToggle('slow');
         });
+
+        $('#pause').on('click', () => this.pauseAudio());
+        $('#mute').on('click', () => this.muteAudio());
     }
 
     /* Adds the listeners for the game keys that are to be used */
@@ -86,7 +91,7 @@ class FIFO {
         let interval = setInterval(() => {
             this.timer--;
             $('#timer').html(this.timer);
-            if(this.timer === 0) {
+            if (this.timer === 0) {
                 clearInterval(interval);
                 this.gameOver();
             }
@@ -94,11 +99,11 @@ class FIFO {
     }
 
     gameOver() {
-        if(this.playerOne.points === this.playerTwo.points) {
+        if (this.playerOne.points === this.playerTwo.points) {
             $('#gameover').find('h3').html("ITS A DRAW");
-        }else if(this.playerOne.points > this.playerTwo.points) {
+        } else if (this.playerOne.points > this.playerTwo.points) {
             $('#gameover').find('h3').html("P1 WINS!");
-        }else if(this.playerOne.points < this.playerTwo.points) {
+        } else if (this.playerOne.points < this.playerTwo.points) {
             $('#gameover').find('h3').html("P2 WINS!");
         }
         $('#gameover').find('p:first').html("P1 SCORE: " + this.playerOne.points);
@@ -113,5 +118,13 @@ class FIFO {
         $([this.playerOne, this.playerTwo]).each((i, player) => {
             player.resetPlayer();
         });
+    }
+
+    pauseAudio() {
+        this.isPlaying ? [this.soundtrack.pause(), this.isPlaying = false] : [this.soundtrack.play(), this.isPlaying = true];
+    }
+
+    muteAudio() {
+        this.soundtrack.volume ? this.soundtrack.volume = 0 : this.soundtrack.volume = 1;
     }
 }

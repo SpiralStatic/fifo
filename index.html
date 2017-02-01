@@ -5,7 +5,7 @@
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>FIFO</title>
-        <link rel="stylesheet" href="css/app.css">
+        <link rel="stylesheet" type="text/css" href="css/app.css">
         <script src="bower_components/jquery/dist/jquery.js"></script>
         <script src="bower_components/what-input/dist/what-input.js"></script>
         <script src="bower_components/foundation-sites/dist/js/foundation.js"></script>
@@ -18,12 +18,21 @@
             <div class="large-12 medium-12 small-12 columns">
                 <header class="top-bar">
                     <h1 class="menu-text">FIFO</h1>
+                    <audio id="soundtrack" autoplay>
+                        <source src="etc/RoccoW-ロッコ-07.mp3" type="audio/mpeg">
+                        <p>Your browser does not support the audio element.</p>
+                    </audio>
+                    <div id="audio">
+                        <button type="button" id="pause">
+                            <i class="fi-pause"></i>
+                        </button>
+                        <button type="button" id="mute">
+                            <i class="fi-volume"></i>
+                        </button>
+                    </div>
                 </header>
             </div>
-            <audio autoplay>
-                <source src="etc/RoccoW-ロッコ-07.mp3" type="audio/mpeg">
-                Your browser does not support the audio element.
-            </audio>
+
             <div id="infobar">
                 <div id="p1score">P1 SCORE</div>
                 <div id="timer">TIMER</div>
@@ -101,7 +110,4 @@
             </div>
         </div>
     </body>
-</html>
-</div>
-</body>
 </html>

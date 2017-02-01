@@ -73,6 +73,31 @@ header {
             background-position: 0 82%;
         }
     }
+
+    div#audio {
+        position: absolute;
+        width: 15vw;
+        height: 10vh;
+        top: 0;
+        right: 2%;
+        z-index: 1;
+        margin: 0 5%;
+
+        button {
+            margin: 0 3%;
+            height: 100%;
+            width: 30%;
+
+            i {
+                color: $black;
+                font-size: 2rem;
+            }
+
+            i:hover {
+                color: $white;
+            }
+        }
+    }
 }
 
 div#infobar {
@@ -92,9 +117,8 @@ div#infobar {
 //-----=MAIN=-----//
 
 main {
-    height: 80vh;
+    height: 85vh;
     padding-top: 2vh;
-
     background: url('../images/background.png'); // Fallback
     background: -moz-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 59%, rgba(0, 0, 0, 0.65) 100%), url('../images/background.png');
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(0, 0, 0, 0)), color-stop(59%, rgba(0, 0, 0, 0)), color-stop(100%, rgba(0, 0, 0, 0.65))), url('../images/background.png');
@@ -137,7 +161,7 @@ main {
 
             div.player-section {
                 display: inline-block;
-                height: 65vh;
+                height: 60vh;
                 width: 100%;
                 border-bottom: 4px solid $white;
                 text-align: center;
@@ -167,7 +191,7 @@ main {
             }
 
             div.player-controls {
-                height: 35vh;
+                height: 40vh;
                 margin-top: 1%;
 
                 div.button-group {
@@ -235,6 +259,14 @@ main {
 }
 @media only screen and (min-width: 425px) {
     body {
+        div#audio {
+            button {
+                i {
+                    font-size: 2.8rem;
+                }
+            }
+        }
+
         div#game {
             div.player {
                 div.player-section {
@@ -244,9 +276,9 @@ main {
                 div.player-controls {
                     div.button-group {
                         a.round {
-                            height: 5vh;
-                            width: 5vh;
-                            line-height: 5vh;
+                            height: 5.5vh;
+                            width: 5.5vh;
+                            line-height: 5.5vh;
                             margin: 1%;
                         }
                     }
@@ -257,7 +289,11 @@ main {
         div#gameover {
             div.gameover-section {
                 p {
-                    margin: 5% 0;
+                    margin: 4% 0;
+                }
+
+                a.button {
+                    margin: 3%;
                 }
             }
         }

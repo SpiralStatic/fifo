@@ -8,6 +8,8 @@ class Player {
         this.pointsElement = $(`#p${playerNo}score`);
         this.keys = keys;
         this.game = game;
+        this.soundPop = new Audio("etc/Mark_DiAngelo-Blop.mp3");
+        this.soundPop.volume = 0.5;
     }
 
     /* Sets up the game stacks */
@@ -106,6 +108,7 @@ class Player {
     removeCube(stack) {
         //console.log(stack);
         stack.shift();
+        this.soundPop.play();
     }
 
     /* Updates the game display when cube is removed */
