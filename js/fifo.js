@@ -18,7 +18,7 @@ class FIFO {
 
     /* Adds the game menu listeners to the options */
     addMenuListeners() {
-        console.log("addMenuListeners()");
+        //console.log("addMenuListeners()");
         /* Toggles selected menu option value */
         $('.button-group').children().on('click', (event) => {
             console.log(event.target);
@@ -51,7 +51,6 @@ class FIFO {
     addGameListeners() {
         // Q - 113; A - 97; S - 115; W - 119;
         // I - 105; K - 107; L - 108; O - 111;
-        console.log(this.players);
         $(document).on('keypress', (event) => {
             $(this.players).each((i, player) => player.keyCheck(event.which));
         });
@@ -74,7 +73,7 @@ class FIFO {
 
     /* Starts the game by taking the required settings */
     startGame() {
-        console.log("startGame(" + this.settings[0] + ", " + this.settings[1] + ", " + this.settings[2] + ")");
+        //console.log("startGame(" + this.settings[0] + ", " + this.settings[1] + ", " + this.settings[2] + ")");
         this.players[0].stacks = this.players[0].stacksSetUp(this.settings[0]);
 
         this.players[1].stacks = (this.settings[1] === 'EQUAL') ? this.copyArray(this.players[0].stacks) : this.players[1].stacksSetUp(this.settings[0]);
@@ -118,14 +117,20 @@ class FIFO {
     }
 
     resetGame() {
-        this.timer = 10;
+        this.timer = 30;
         $([this.players[0], this.players[1]]).each((i, player) => {
             player.resetPlayer();
         });
     }
 
     pauseAudio() {
-        this.isPlaying ? [this.soundtrack.pause(), this.isPlaying = false] : [this.soundtrack.play(), this.isPlaying = true];
+        if (this.isPlaying) {
+            this.soundtrack.pause();
+            this.isPlaying = false;
+        } else {
+            this.soundtrack.play();
+            this.isPlaying = true;
+        }
     }
 
     muteAudio() {

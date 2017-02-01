@@ -16,7 +16,7 @@ class Player {
 
     /* Sets up the game stacks */
     stacksSetUp(noOfStacks) {
-        console.log("stacksSetUp(" + noOfStacks + ")");
+        //console.log("stacksSetUp(" + noOfStacks + ")");
         let stackTypes = ['SINGLE', 'DOUBLE'];
         this.game.stackType = noOfStacks;
         let stacks = [];
@@ -32,7 +32,7 @@ class Player {
             color: 'color',
             powerup: 'power-up'
         } */
-        console.log("createStack()");
+        //console.log("createStack()");
         let stack = [];
         const colorMax = 3;
         for (let i = 0; i < 200; i++) {
@@ -143,10 +143,12 @@ class Player {
             getCorrectHTMLStack = 'ul#' + this.playerNo + '0';
             $(getCorrectHTMLStack + ' > .cube:last').remove();
             $(getCorrectHTMLStack).prepend('<li class="cube ' + this.stacks[0][6].color + ' ' + this.stacks[0][6].powerup + '"></li>');
+            $(getCorrectHTMLStack + ' > .cube:last').addClass('firstitem');
         } else if (stack === this.stacks[1]) {
             getCorrectHTMLStack = 'ul#' + this.playerNo + '1';
             $(getCorrectHTMLStack + ' > .cube:last').remove();
             $(getCorrectHTMLStack).prepend('<li class="cube ' + this.stacks[1][6].color + ' ' + this.stacks[1][6].powerup + '"></li>');
+            $(getCorrectHTMLStack + ' > .cube:last').addClass('firstitem');
         }
         //console.log(getCorrectHTMLStack);
     }
