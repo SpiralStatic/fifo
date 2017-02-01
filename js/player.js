@@ -132,7 +132,8 @@ class Player {
     }
 
     resetPlayer() {
-        this.stacks = [];
+        this.stacks.length = 0;
+        $('#player-' + this.playerNo).empty();
         this.points = 0;
         $(this.pointsElement).html(`P${this.playerNo} SCORE`);
     }
