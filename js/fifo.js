@@ -42,6 +42,15 @@ class FIFO {
         });
     }
 
+    addGameOverListeners() {
+        $('#restart').on('click', () => {
+            
+        });
+        $('#newgame').on('click', () => {
+
+        });
+    }
+
     /* Starts the game by taking the required settings */
     startGame(noOfStacks, similarity, powered) {
         console.log("startGame(" + noOfStacks + ", " + similarity + ", " + powered + ")");
@@ -85,5 +94,7 @@ class FIFO {
 
         $('#game').slideToggle('slow');
         $('#gameover').slideToggle('slow');
+
+        addGameOverListeners();
     }
 }
