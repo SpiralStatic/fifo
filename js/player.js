@@ -1,6 +1,7 @@
 class Player {
     constructor(game, playerNo, keys) {
         this.colors = ['red', 'blue', 'green', 'yellow'];
+        this.powerUps = ['freeze'];
         this.stacks = [];
         this.points = 0;
         this.pointsElement = null;
@@ -35,9 +36,11 @@ class Player {
         const colorMax = 3;
         for (let i = 0; i < 200; i++) {
             let newColor = this.colors[this.getRandom(0, colorMax)];
+            let powerUp = this.getRandom(0, 100);
+            powerUp <= this.powerUps.length ? powerUp = this.powerUps[powerUp] : powerUp = 'none';
             stack.push({
                 color: newColor,
-                powerup: 'none'
+                powerup: powerUp
             });
         }
         return stack;
@@ -90,17 +93,22 @@ class Player {
         if (this.game.stackType === 'DOUBLE' && this.stacks[0][0].color === color && this.stacks[1][0].color === color) {
             $(this.stacks).each((i, stack) => {
                 this.removeCube(stack);
+                this.checkPowerUp();
                 this.updateDisplay(stack);
-                this.addPoints();
+                this.changePoints(1);
             });
         } else if (this.game.stackType === 'DOUBLE' && this.stacks[1][0].color === color) {
             this.removeCube(this.stacks[1]);
+            this.checkPowerUp();
             this.updateDisplay(this.stacks[1]);
-            this.addPoints();
+            this.changePoints(1);
         } else if (this.stacks[0][0].color === color) {
             this.removeCube(this.stacks[0]);
+            this.checkPowerUp();
             this.updateDisplay(this.stacks[0]);
-            this.addPoints();
+            this.changePoints(1);
+        } else {
+            this.changePoints(-1);
         }
     }
 
@@ -128,8 +136,8 @@ class Player {
     }
 
     /* Increments the players point value */
-    addPoints() {
-        this.points++;
+    changePoints(points) {
+        this.points += points;
         //console.log(this.pointsElement, this.points);
         $(this.pointsElement).html(this.points);
     }

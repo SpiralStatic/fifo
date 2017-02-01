@@ -3,7 +3,7 @@ class FIFO {
         /* Variables */
         this.colors = ['red', 'blue', 'green', 'yellow'];
         this.stackType = 'SINGLE';
-        this.timer = 10; // Game Length (Seconds)
+        this.timer = 60; // Game Length (Seconds)
         this.addMenuListeners();
         this.addGameListeners();
         this.addGameOverListeners();
