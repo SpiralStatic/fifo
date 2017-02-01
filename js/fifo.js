@@ -5,6 +5,7 @@ class FIFO {
         this.stackType = 'SINGLE';
         this.timer = 10; // Game Length (Seconds)
         this.addMenuListeners();
+        this.settings = [];
     }
 
     /* Adds the game menu listeners to the options */
@@ -24,8 +25,12 @@ class FIFO {
         $('#game').hide();
         $('#gameover').hide();
         $('#play').on('click', () => {
-            let settings = $('#menu').find('.active');
-            this.startGame($(settings[0]).html(), $(settings[1]).html(), $(settings[2]).html());
+            let settingsHTML = $('#menu').find('.active');
+            $(settingsHTML).each((i, setting) => {
+                console.log(setting);
+                this.settings.push($(setting).html());
+            });
+            this.startGame();
             $('#menu').slideToggle('slow');
             $('#game').slideToggle('slow');
             this.addGameListeners();
@@ -44,7 +49,10 @@ class FIFO {
 
     addGameOverListeners() {
         $('#restart').on('click', () => {
-            
+            $('#game').slideToggle('slow');
+            $('#gameover').slideToggle('slow');
+            this.resetGame();
+            this.startGame();
         });
         $('#newgame').on('click', () => {
 
@@ -52,11 +60,11 @@ class FIFO {
     }
 
     /* Starts the game by taking the required settings */
-    startGame(noOfStacks, similarity, powered) {
-        console.log("startGame(" + noOfStacks + ", " + similarity + ", " + powered + ")");
-        this.playerOne.stacks = this.playerOne.stacksSetUp(noOfStacks);
+    startGame() {
+        console.log("startGame(" + this.settings[0] + ", " + this.settings[1] + ", " + this.settings[2] + ")");
+        this.playerOne.stacks = this.playerOne.stacksSetUp(this.settings[0]);
 
-        this.playerTwo.stacks = (similarity === 'EQUAL') ? this.copyArray(this.playerOne.stacks) : this.playerTwo.stacksSetUp(noOfStacks);
+        this.playerTwo.stacks = (this.settings[1] === 'EQUAL') ? this.copyArray(this.playerOne.stacks) : this.playerTwo.stacksSetUp(this.settings[0]);
 
         $([this.playerOne, this.playerTwo]).each((i, stack) => {
             stack.stackElement = stack.displayStacks();
@@ -95,6 +103,13 @@ class FIFO {
         $('#game').slideToggle('slow');
         $('#gameover').slideToggle('slow');
 
-        addGameOverListeners();
+        this.addGameOverListeners();
+    }
+
+    resetGame() {
+        this.timer = 10;
+        $([this.playerOne, this.playerTwo]).each((i, player) => {
+            player.resetPlayer();
+        });
     }
 }

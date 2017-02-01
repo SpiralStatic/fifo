@@ -127,7 +127,13 @@ class Player {
     /* Increments the players point value */
     addPoints() {
         this.points++;
-        console.log(this.pointsElement, this.points);
+        //console.log(this.pointsElement, this.points);
         $(this.pointsElement).html(this.points);
+    }
+
+    resetPlayer() {
+        this.stacks = [];
+        this.points = 0;
+        $(this.pointsElement).html(`P${this.playerNo} SCORE`);
     }
 }
