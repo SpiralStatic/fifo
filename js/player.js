@@ -8,7 +8,6 @@ class Player {
         this.pointsElement = $(`p${playerNo}score`);
         this.keys = keys;
         this.game = game;
-        // KEYPRESS MATRIX WOULD REMOVE NEED FOR EXTENSION
     }
 
     /* Sets up the game stacks */
@@ -39,7 +38,6 @@ class Player {
                 powerup: 'none'
             });
         }
-        //console.log(stack);
         return stack;
     }
 
@@ -52,7 +50,7 @@ class Player {
             $('#player-' + this.playerNo).append($('<ul></ul>').attr('id', `${this.playerNo}${i}`));
             let count = 0;
             stack.map((block) => {
-                if (count >=maxCubes) return;
+                if (count >= maxCubes) return;
                 count++;
                 $('ul#' + this.playerNo + i).prepend('<li class="cube ' + block.color + ' ' + block.powerup + '"></li>');
             });
@@ -86,14 +84,13 @@ class Player {
 
     /* Checks if cube is same, and if so triggers removal and display update */
     canRemoveCube(color) {
-        console.log(this.stacks[1][0].color, color, this.game.stackType);
+        //console.log(this.stacks[1][0].color, color, this.game.stackType);
         if (this.game.stackType === 'DOUBLE' && this.stacks[0][0].color === color && this.stacks[1][0].color === color) {
-            this.removeCube(this.stacks[0]);
-            this.removeCube(this.stacks[1]);
-            this.updateDisplay(this.stacks[0]);
-            this.updateDisplay(this.stacks[1]);
-            this.addPoints();
-            this.addPoints();
+            $(this.stacks).each((i, stack) => {
+                this.removeCube(stack);
+                this.updateDisplay(stack);
+                this.addPoints();
+            });
         } else if (this.game.stackType === 'DOUBLE' && this.stacks[1][0].color === color) {
             this.removeCube(this.stacks[1]);
             this.updateDisplay(this.stacks[1]);
