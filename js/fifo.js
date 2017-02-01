@@ -133,14 +133,12 @@ class FIFO {
         $(this.players).each((i, player) => {
             console.log(i, playerWhoActivated);
             if (i != playerWhoActivated) {
-                $(document).off('keypress');
+                player.isFrozen = true;
                 $('#player-' + player.playerNo).toggleClass('frozen');
                 setTimeout(() => {
-                    $(document).on('keypress', (event) => {
-                        player.keyCheck(event.which);
-                    });
+                    player.isFrozen = false;
                     $('#player-' + player.playerNo).toggleClass('frozen');
-                }, 2500);
+                }, 3000);
             }
         });
     }
