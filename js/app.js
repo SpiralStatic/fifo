@@ -4,8 +4,8 @@ class FIFO {
     constructor() {
         /* Variables */
         this.colors = ['red', 'blue', 'green', 'yellow'];
-        this.stackType = 'Single';
-        this.timer = 45; // Game Length (Seconds)
+        this.stackType = 'SINGLE';
+        this.timer = 10; // Game Length (Seconds)
 
         this.playerOne = new PlayerOne();
         this.playerTwo = new PlayerTwo();
@@ -52,11 +52,6 @@ class FIFO {
     startGame(noOfStacks, similarity, powered) {
         console.log("startGame(" + noOfStacks + ", " + similarity + ", " + powered + ")");
         this.playerOne.stacks = this.playerOne.stacksSetUp(noOfStacks);
-        // if (similarity === 'EQUAL') {
-        //     this.playerTwo.stacks = this.copyArray(this.playerOne.stacks);
-        // } else {
-        //     this.playerTwo.stacks = this.playerTwo.stacksSetUp(noOfStacks);
-        // }
 
         this.playerTwo.stacks = (similarity === 'EQUAL') ? this.copyArray(this.playerOne.stacks) : this.playerTwo.stacksSetUp(noOfStacks);
 
@@ -86,17 +81,14 @@ class FIFO {
     gameOver() {
         if(this.playerOne.points === this.playerTwo.points) {
             $('#gameover').find('h3').html("ITS A DRAW");
-            $('#gameover').find('p:first').html("P1 SCORE: " + this.playerOne.points);
-            $('#gameover').find('p:last').html("P2 SCORE: " + this.playerTwo.points);
         }else if(this.playerOne.points > this.playerTwo.points) {
             $('#gameover').find('h3').html("P1 WINS!");
-            $('#gameover').find('p:first').html("P1 SCORE: " + this.playerOne.points);
-            $('#gameover').find('p:last').html("P2 SCORE: " + this.playerTwo.points);
         }else if(this.playerOne.points < this.playerTwo.points) {
             $('#gameover').find('h3').html("P2 WINS!");
-            $('#gameover').find('p:first').html("P1 SCORE: " + this.playerOne.points);
-            $('#gameover').find('p:last').html("P2 SCORE: " + this.playerTwo.points);
         }
+        $('#gameover').find('p:first').html("P1 SCORE: " + this.playerOne.points);
+        $('#gameover').find('p:last').html("P2 SCORE: " + this.playerTwo.points);
+
         $('#game').slideToggle('slow');
         $('#gameover').slideToggle('slow');
     }
@@ -107,6 +99,7 @@ class Player {
         this.colors = ['red', 'blue', 'green', 'yellow'];
         this.stacks = [];
         this.points = 0;
+        this.pointsElement = null;
         // KEYPRESS MATRIX WOULD REMOVE NEED FOR EXTENSION
     }
 
@@ -165,6 +158,7 @@ class Player {
 
     /* Checks if cube is same, and if so triggers removal and display update */
     canRemoveCube(color) {
+        console.log(this.stacks[1][0].color, color, this.stackType);
         if (this.stackType === 'DOUBLE' && this.stacks[0][0].color === color && this.stacks[1][0].color === color) {
             this.removeCube(this.stacks[0]);
             this.removeCube(this.stacks[1]);
@@ -172,13 +166,13 @@ class Player {
             this.updateDisplay(this.stacks[1]);
             this.addPoints();
             this.addPoints();
-        } else if (this.stacks[0][0].color === color) {
-            this.removeCube(this.stacks[0]);
-            this.updateDisplay(this.stacks[0]);
-            this.addPoints();
         } else if (this.stackType === 'DOUBLE' && this.stacks[1][0].color === color) {
             this.removeCube(this.stacks[1]);
             this.updateDisplay(this.stacks[1]);
+            this.addPoints();
+        } else if (this.stacks[0][0].color === color) {
+            this.removeCube(this.stacks[0]);
+            this.updateDisplay(this.stacks[0]);
             this.addPoints();
         }
     }
@@ -186,6 +180,7 @@ class Player {
     // Removes a single cube from the front of an array */
     removeCube(stack) {
         //console.log(playerStack);
+        console.log(stack);
         stack.shift();
     }
 
@@ -215,6 +210,7 @@ class PlayerOne extends Player {
     constructor() {
         super();
         this.playerNo = 1;
+        this.pointsElement = $(`p${this.playerNo}score`);
     }
 
     /* Upon key press triggers function to check key to cube */
@@ -270,7 +266,7 @@ class PlayerTwo extends Player {
 }
 
 $(() => {
-    const fifo = new FIFO();
+    window.fifo = new FIFO();
 });
 
 // Change all vars to lets or consts
