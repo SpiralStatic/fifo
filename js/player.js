@@ -1,16 +1,20 @@
 class Player {
     constructor(game, playerNo, keys) {
         this.colors = ['red', 'blue', 'green', 'yellow'];
-        this.powerUps = ['freeze'];
+        this.powerUps = ['freeze', 'removal'];
         this.stacks = [];
         this.points = 0;
-        this.pointsElement = null;
+        this.pointsElement = null;  
         this.playerNo = playerNo;
         this.pointsElement = $(`#p${playerNo}score`);
         this.keys = keys;
         this.game = game;
         this.soundPop = new Audio("etc/Mark_DiAngelo-Blop.mp3"); // Recorded by Mark DiAngelo @ http://soundbible.com/2067-Blop.html
         this.soundPop.volume = 0.7;
+        this.soundIce = new Audio("etc/SoundBible.com-Mirror_Shattering.mp3"); // Recorded by Mike Koenig @ http://soundbible.com/994-Mirror-Shattering.html
+        this.soundIce.volume = 0.8;
+        this.soundPower = new Audio("etc/Power-Up.mp3"); // Recorded by Mike Koenig @ http://soundbible.com/994-Mirror-Shattering.html
+        this.soundPower.volume = 0.8;
         this.isFrozen = false;
     }
 
@@ -37,8 +41,8 @@ class Player {
         const colorMax = 3;
         for (let i = 0; i < 200; i++) {
             let newColor = this.colors[this.getRandom(0, colorMax)];
-            let powerUp = this.getRandom(0, 50); // Chance of powered block
-            powerUp <= this.powerUps.length && this.game.settings[2] === 'POWER-UPS' ? powerUp = this.powerUps[powerUp] : powerUp = 'none';
+            let powerUp = this.getRandom(0, 30); // Chance of powered block
+            (powerUp <= this.powerUps.length - 1) && this.game.settings[2] === 'POWER-UPS' ? powerUp = this.powerUps[powerUp] : powerUp = 'none';
             stack.push({
                 color: newColor,
                 powerup: powerUp
@@ -60,6 +64,7 @@ class Player {
                 count++;
                 $('ul#' + this.playerNo + i).prepend('<li class="cube ' + block.color + ' ' + block.powerup + '"></li>');
             });
+            $('ul#' + this.playerNo + i + ' > .cube:last').addClass('firstitem');
         });
     }
 
@@ -94,19 +99,19 @@ class Player {
         if (!this.isFrozen) {
             if (this.game.stackType === 'DOUBLE' && this.stacks[0][0].color === color && this.stacks[1][0].color === color) {
                 $(this.stacks).each((i, stack) => {
-                    this.removeCube(stack);
                     this.checkPowerUp(stack[0]);
+                    this.removeCube(stack);
                     this.updateDisplay(stack);
                     this.changePoints(1);
                 });
             } else if (this.game.stackType === 'DOUBLE' && this.stacks[1][0].color === color) {
-                this.removeCube(this.stacks[1]);
                 this.checkPowerUp(this.stacks[1][0]);
+                this.removeCube(this.stacks[1]);
                 this.updateDisplay(this.stacks[1]);
                 this.changePoints(1);
             } else if (this.stacks[0][0].color === color) {
-                this.removeCube(this.stacks[0]);
                 this.checkPowerUp(this.stacks[0][0]);
+                this.removeCube(this.stacks[0]);
                 this.updateDisplay(this.stacks[0]);
                 this.changePoints(1);
             } else {
@@ -128,6 +133,9 @@ class Player {
             switch (power) {
                 case 'freeze':
                     this.game.freezePlayer(this.playerNo - 1); //Convert from Numbers to 0,1 indexing
+                    break;
+                case 'removal':
+                    this.removeBlocks();
                     break;
                 default:
 
@@ -165,5 +173,16 @@ class Player {
         $('#player-' + this.playerNo).empty();
         this.points = 0;
         $(this.pointsElement).html(`P${this.playerNo} SCORE`);
+    }
+
+    removeBlocks() {
+        $(this.stacks).each((i, stack) => {
+            for (let i = 0; i < 3; i++) {
+                this.removeCube(stack);
+                this.updateDisplay(stack);
+                this.changePoints(1);
+            }
+        });
+        this.soundPower.play();
     }
 }
