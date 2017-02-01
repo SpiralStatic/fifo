@@ -49,8 +49,8 @@ class FIFO {
         // Q - 113; A - 97; S - 115; W - 119;
         // I - 105; K - 107; L - 108; O - 111;
         console.log(this.players);
-        $(document).bind('keypress', (event) => {
-            $(this.players).each((i, player) => player.keyCheck(event.keyCode));
+        $(document).on('keypress', (event) => {
+            $(this.players).each((i, player) => player.keyCheck(event.which));
         });
     }
 
@@ -131,13 +131,16 @@ class FIFO {
 
     freezePlayer(playerWhoActivated) {
         $(this.players).each((i, player) => {
-            if(i != playerWhoActivated) {
-                let freezeTime = setTimeout(() => {
-                    $(document).unbind('keypress');
+            console.log(i, playerWhoActivated);
+            if (i != playerWhoActivated) {
+                $(document).off('keypress');
+                $('#player-' + player.playerNo).toggleClass('frozen');
+                setTimeout(() => {
+                    $(document).on('keypress', (event) => {
+                        player.keyCheck(event.which);
+                    });
                     $('#player-' + player.playerNo).toggleClass('frozen');
                 }, 2500);
-                this.addGameListeners();
-                $('#player-' + player.playerNo).toggleClass('frozen');
             }
         });
     }
