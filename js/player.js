@@ -4,7 +4,7 @@ class Player {
         this.powerUps = ['freeze', 'removal'];
         this.stacks = [];
         this.points = 0;
-        this.pointsElement = null;  
+        this.pointsElement = null;
         this.playerNo = playerNo;
         this.pointsElement = $(`#p${playerNo}score`);
         this.keys = keys;
@@ -78,19 +78,26 @@ class Player {
         switch (keyPress) {
             case this.keys[0]:
                 this.canRemoveCube(this.colors[0]); // Red
+                $('#player-' + this.playerNo + '-controls').find('a.red').addClass('glow');
                 break;
             case this.keys[1]:
                 this.canRemoveCube(this.colors[1]); // Blue
+                $('#player-' + this.playerNo + '-controls').find('a.blue').addClass('glow');
                 break;
             case this.keys[2]:
                 this.canRemoveCube(this.colors[2]); // Green
+                $('#player-' + this.playerNo + '-controls').find('a.green').addClass('glow');
                 break;
             case this.keys[3]:
                 this.canRemoveCube(this.colors[3]); // Yellow
+                $('#player-' + this.playerNo + '-controls').find('a.yellow').addClass('glow');
                 break;
             default:
                 break;
         }
+        setTimeout(() => {
+            $('#player-' + this.playerNo + '-controls').find('a.glow').removeClass('glow');
+        }, 1000);
     }
 
     /* Checks if cube is same, and if so triggers removal and display update */

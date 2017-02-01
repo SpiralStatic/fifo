@@ -308,6 +308,21 @@ main {
                 animation-iteration-count:infinite;
                 animation-timing-function: ease-in-out;
             }
+
+            .glow {
+                -webkit-animation-name: firstitem;
+                -webkit-animation-duration: 1000ms;
+                -webkit-animation-iteration-count: 1;
+                -webkit-animation-timing-function: ease-in-out;
+                -moz-animation-name: firstitem;
+                -moz-animation-duration: 1000ms;
+                -moz-animation-iteration-count: 1;
+                -moz-animation-timing-function: ease-in-out;
+                animation-name: firstitem;
+                animation-duration: 1000ms;
+                animation-iteration-count: 1;
+                animation-timing-function: ease-in-out;
+            }
         }
     }
 
