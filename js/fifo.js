@@ -1,6 +1,7 @@
 class FIFO {
     constructor() {
         /* Variables */
+        this.players = [];
         this.colors = ['red', 'blue', 'green', 'yellow'];
         this.stackType = 'SINGLE';
         this.timer = 60; // Game Length (Seconds)
@@ -47,9 +48,9 @@ class FIFO {
     addGameListeners() {
         // Q - 113; A - 97; S - 115; W - 119;
         // I - 105; K - 107; L - 108; O - 111;
+        console.log(this.players);
         $(document).bind('keypress', (event) => {
-            this.playerOne.keyCheck(event.keyCode);
-            this.playerTwo.keyCheck(event.keyCode);
+            $(this.players).each((i, player) => player.keyCheck(event.keyCode));
         });
     }
 
@@ -71,11 +72,11 @@ class FIFO {
     /* Starts the game by taking the required settings */
     startGame() {
         console.log("startGame(" + this.settings[0] + ", " + this.settings[1] + ", " + this.settings[2] + ")");
-        this.playerOne.stacks = this.playerOne.stacksSetUp(this.settings[0]);
+        this.players[0].stacks = this.players[0].stacksSetUp(this.settings[0]);
 
-        this.playerTwo.stacks = (this.settings[1] === 'EQUAL') ? this.copyArray(this.playerOne.stacks) : this.playerTwo.stacksSetUp(this.settings[0]);
+        this.players[1].stacks = (this.settings[1] === 'EQUAL') ? this.copyArray(this.players[0].stacks) : this.players[1].stacksSetUp(this.settings[0]);
 
-        $([this.playerOne, this.playerTwo]).each((i, stack) => {
+        $([this.players[0], this.players[1]]).each((i, stack) => {
             stack.stackElement = stack.displayStacks();
         });
 
@@ -99,15 +100,15 @@ class FIFO {
     }
 
     gameOver() {
-        if (this.playerOne.points === this.playerTwo.points) {
+        if (this.players[0].points === this.players[1].points) {
             $('#gameover').find('h3').html("ITS A DRAW");
-        } else if (this.playerOne.points > this.playerTwo.points) {
+        } else if (this.players[0].points > this.players[1].points) {
             $('#gameover').find('h3').html("P1 WINS!");
-        } else if (this.playerOne.points < this.playerTwo.points) {
+        } else if (this.players[0].points < this.players[1].points) {
             $('#gameover').find('h3').html("P2 WINS!");
         }
-        $('#gameover').find('p:first').html("P1 SCORE: " + this.playerOne.points);
-        $('#gameover').find('p:last').html("P2 SCORE: " + this.playerTwo.points);
+        $('#gameover').find('p:first').html("P1 SCORE: " + this.players[0].points);
+        $('#gameover').find('p:last').html("P2 SCORE: " + this.players[1].points);
 
         $('#game').slideToggle('slow');
         $('#gameover').slideToggle('slow');
@@ -115,7 +116,7 @@ class FIFO {
 
     resetGame() {
         this.timer = 10;
-        $([this.playerOne, this.playerTwo]).each((i, player) => {
+        $([this.players[0], this.players[1]]).each((i, player) => {
             player.resetPlayer();
         });
     }
@@ -126,5 +127,18 @@ class FIFO {
 
     muteAudio() {
         this.soundtrack.volume ? this.soundtrack.volume = 0 : this.soundtrack.volume = 1;
+    }
+
+    freezePlayer(playerWhoActivated) {
+        $(this.players).each((i, player) => {
+            if(i != playerWhoActivated) {
+                let freezeTime = setTimeout(() => {
+                    $(document).unbind('keypress');
+                    $('#player-' + player.playerNo).toggleClass('frozen');
+                }, 2500);
+                this.addGameListeners();
+                $('#player-' + player.playerNo).toggleClass('frozen');
+            }
+        });
     }
 }

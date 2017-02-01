@@ -36,7 +36,7 @@ class Player {
         const colorMax = 3;
         for (let i = 0; i < 200; i++) {
             let newColor = this.colors[this.getRandom(0, colorMax)];
-            let powerUp = this.getRandom(0, 100);
+            let powerUp = this.getRandom(0, 3);
             powerUp <= this.powerUps.length ? powerUp = this.powerUps[powerUp] : powerUp = 'none';
             stack.push({
                 color: newColor,
@@ -93,18 +93,18 @@ class Player {
         if (this.game.stackType === 'DOUBLE' && this.stacks[0][0].color === color && this.stacks[1][0].color === color) {
             $(this.stacks).each((i, stack) => {
                 this.removeCube(stack);
-                this.checkPowerUp();
+                this.checkPowerUp(stack[0]);
                 this.updateDisplay(stack);
                 this.changePoints(1);
             });
         } else if (this.game.stackType === 'DOUBLE' && this.stacks[1][0].color === color) {
             this.removeCube(this.stacks[1]);
-            this.checkPowerUp();
+            this.checkPowerUp(this.stacks[1][0]);
             this.updateDisplay(this.stacks[1]);
             this.changePoints(1);
         } else if (this.stacks[0][0].color === color) {
             this.removeCube(this.stacks[0]);
-            this.checkPowerUp();
+            this.checkPowerUp(this.stacks[0][0]);
             this.updateDisplay(this.stacks[0]);
             this.changePoints(1);
         } else {
@@ -117,6 +117,19 @@ class Player {
         //console.log(stack);
         stack.shift();
         this.soundPop.play();
+    }
+
+    checkPowerUp(block) {
+        if (block.powerup != 'none') {
+            let power = block.powerup;
+            switch (power) {
+                case 'freeze':
+                    this.game.freezePlayer(this.playerNo - 1); //Convert from Numbers to 0,1 indexing
+                    break;
+                default:
+
+            }
+        }
     }
 
     /* Updates the game display when cube is removed */
