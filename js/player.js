@@ -9,8 +9,8 @@ class Player {
         this.pointsElement = $(`#p${playerNo}score`);
         this.keys = keys;
         this.game = game;
-        this.soundPop = new Audio("etc/Mark_DiAngelo-Blop.mp3");
-        this.soundPop.volume = 0.5;
+        this.soundPop = new Audio("etc/Mark_DiAngelo-Blop.mp3"); // Recorded by Mark DiAngelo @ http://soundbible.com/2067-Blop.html
+        this.soundPop.volume = 0.7;
         this.isFrozen = false;
     }
 
