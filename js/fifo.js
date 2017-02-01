@@ -131,7 +131,7 @@ class FIFO {
 
     freezePlayer(playerWhoActivated) {
         $(this.players).each((i, player) => {
-            console.log(i, playerWhoActivated);
+            //console.log(i, playerWhoActivated);
             if (i != playerWhoActivated) {
                 player.isFrozen = true;
                 $('#player-' + player.playerNo).toggleClass('frozen');
