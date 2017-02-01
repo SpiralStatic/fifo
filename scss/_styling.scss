@@ -89,11 +89,10 @@ div#infobar {
         font-size: 1.5em;
     }
 }
-
 //-----=MAIN=-----//
 
 main {
-    height: 90vh;
+    height: 80vh;
     padding-top: 2vh;
 
     background: url('../images/background.png'); // Fallback
@@ -210,16 +209,27 @@ main {
 
     div#gameover {
         height: 70vh;
-        text-align: center;
 
-        h3 {
-            font-size: 1.3em;
-            color: $white;
-        }
+        div.gameover-section {
+            text-align: center;
 
-        p {
-            font-size: 1.1em;
-            color: $white;
+            h3 {
+                margin: 3%;
+                font-size: 1.4em;
+                color: $white;
+            }
+
+            p {
+                margin: 10% 0;
+                font-size: 1.1em;
+                color: $white;
+            }
+
+            a.button {
+                margin: 5%;
+                width: 70%;
+                border: 3px inset $secondary-color;
+            }
         }
     }
 }
@@ -229,6 +239,25 @@ main {
             div.player {
                 div.player-section {
                     padding: 0 25%;
+                }
+
+                div.player-controls {
+                    div.button-group {
+                        a.round {
+                            height: 5vh;
+                            width: 5vh;
+                            line-height: 5vh;
+                            margin: 1%;
+                        }
+                    }
+                }
+            }
+        }
+
+        div#gameover {
+            div.gameover-section {
+                p {
+                    margin: 5% 0;
                 }
             }
         }
