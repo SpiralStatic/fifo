@@ -417,3 +417,12 @@ main {
         }
     }
 }
+@media only screen and (min-width: 800px) {
+    body {
+        header {
+            div#audio {
+                right: 8%;
+            }
+        }
+    }
+}
