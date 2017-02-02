@@ -13,7 +13,7 @@ class Player {
         this.soundPop.volume = 0.7;
         this.soundIce = new Audio("etc/SoundBible.com-Mirror_Shattering.mp3"); // Recorded by Mike Koenig @ http://soundbible.com/994-Mirror-Shattering.html
         this.soundIce.volume = 0.8;
-        this.soundPower = new Audio("etc/Power-Up.mp3"); // Recorded by Mike Koenig @ http://soundbible.com/994-Mirror-Shattering.html
+        this.soundPower = new Audio("etc/Power-Up.mp3"); // Recorded by KP @ http://soundbible.com/1639-Power-Up.html
         this.soundPower.volume = 0.8;
         this.isFrozen = false;
     }

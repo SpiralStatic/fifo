@@ -1,48 +1,46 @@
-# Foundation for Sites Template
+# FIFO
+Welcome to the wonderful world of FIFO. FIFO is a 2-player stack removal game created during my training as a Web Developer at Sparta Global.
 
-**Please open all issues with this template on the main [Foundation for Sites](https://github.com/zurb/foundation-sites/issues) repo.**
+## Basics
 
-This is the basic starter project for [Foundation for Sites 6](http://foundation.zurb.com/sites). It includes a Sass compiler and a starter HTML file for you.
+### Aim
+The aim of the game is to play against an opponent, to see who can remove the most blocks in the time limit. There are multiple types(colour) blocks and the player must chose the correct key relating to the correct block on the bottom row.
 
-## Installation
 
-To use this template, your computer needs:
+### Controls
+Each player simply has a set of four keys that are assigned to each colour block. By pressing these keys when the lowest block is the same color, the block will be removed and the player will receive a single point.
 
-- [NodeJS](https://nodejs.org/en/) (0.12 or greater)
-- [Git](https://git-scm.com/)
+__Beware though as clicking wrong will remove a point!__
 
-This template can be installed with the Foundation CLI, or downloaded and set up manually.
+## Settings
+There are a variety of settings to tailor your experience including:
+* Number of Stacks: Can either choose from a single or double stacks
+* Similarity: Both players can either have the exact same stacks or have unique ones
+* Power-Ups: Power up your day with some unique power-ups that can move you ahead
 
-### Using the CLI
+Just choose what you wish from the menu area.
 
-Install the Foundation CLI with this command:
+## About
+This game was created over a few days as a small web project at my time during Sparta Global. It had a few requirements/restrictions including:
+* Being 2-player (Player vs Player) or (Player vs Computer)
+* Built with HTML, CSS/SCSS, JS(Jquery)
+* Basic frameworks are Welcome
+* No canvas or 3D
+* Got to be fun!
 
-```bash
-npm install foundation-cli --global
-```
+## Credits
+For this project I used a few resources from elsewhere and I would like to duly credit them.
 
-Use this command to set up a blank Foundation for Sites project with this template:
+#### Soundtrack
+Artist: RoccoW - Album: ロッコ Track: 07 (CC BY-SA 4.0)
+ http://freemusicarchive.org/music/RoccoW/_1035/RoccoW_-__-_07_Fuck_Sidechain_Compression_on_Gameboy
 
-```bash
-foundation new --framework sites --template basic
-```
+#### A variety of sound effects from soundbible.com
+Recorded by Mark DiAngelo @ http://soundbible.com/2067-Blop.html
 
-The CLI will prompt you to give your project a name. The template will be downloaded into a folder with this name.
+Recorded by Mike Koenig @ http://soundbible.com/994-Mirror-Shattering.html
 
-### Manual Setup
+Recorded by KP @ http://soundbible.com/1639-Power-Up.html
 
-To manually set up the template, first download it with Git:
-
-```bash
-git clone https://github.com/zurb/foundation-sites-template projectname
-```
-
-Then open the folder in your command line, and install the needed dependencies:
-
-```bash
-cd projectname
-npm install
-bower install
-```
-
-Finally, run `npm start` to run the Sass compiler. It will re-run every time you save a Sass file.
+#### Extra
+Thank you to stackoverflow, my tutor Ollie Holden and my fellow teammates for all their help
