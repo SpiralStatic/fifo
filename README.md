@@ -44,3 +44,18 @@ Recorded by KP @ http://soundbible.com/1639-Power-Up.html
 
 #### Extra
 Thank you to stackoverflow, my tutor Ollie Holden and my fellow teammates for all their help
+
+***
+
+## Game Creation
+
+### Wireframes
+
+Initial Wireframes before creation of the game. A mobile first approach was done in creating the site.
+
+
+![alt text](docs/wireframe-menu.png "Menu Wireframe")
+
+![alt text](docs/wireframe-game.png "Game Wireframe")
+
+### Game in play
