@@ -69,6 +69,7 @@ class FIFO {
         });
     }
 
+    /* On game finish, hide game screen bring gameover menu forward */
     addGameOverListeners() {
         $('#restart').on('click', () => {
             $('#game').slideToggle('slow');
@@ -86,6 +87,9 @@ class FIFO {
 
     /* Starts the game by taking the required settings */
     startGame() {
+        // Unfreeze players to allow key inputs
+        $(this.players).each((i, player) => player.isFrozen = false);
+
         //console.log("startGame(" + this.settings[0] + ", " + this.settings[1] + ", " + this.settings[2] + ")");
         this.players[0].stacks = this.players[0].stacksSetUp(this.settings[0]);
 
@@ -128,13 +132,16 @@ class FIFO {
 
         $('#game').slideToggle('slow');
         $('#gameover').slideToggle('slow');
+
+        // Prevent key input on game end
+        $(this.players).each((i, player) => {
+            player.isFrozen = true;
+        });
     }
 
     resetGame() {
         this.timer = 30;
-        $([this.players[0], this.players[1]]).each((i, player) => {
-            player.resetPlayer();
-        });
+        $([this.players[0], this.players[1]]).each((i, player) => player.resetPlayer());
     }
 
     pauseAudio() {
