@@ -24,7 +24,7 @@ Just choose what you wish from the menu area.
 This game was created over a few days as a small web project at my time during Sparta Global. It had a few requirements/restrictions including:
 * Being 2-player (Player vs Player) or (Player vs Computer)
 * Built with HTML, CSS/SCSS, JS(Jquery)
-* Basic frameworks are Welcome
+* Basic frameworks are welcome
 * No canvas or 3D
 * Got to be fun!
 
