@@ -41,7 +41,7 @@ class Player {
         const colorMax = 3;
         for (let i = 0; i < 200; i++) {
             let newColor = this.colors[this.getRandom(0, colorMax)];
-            let powerUp = this.getRandom(0, 30); // Chance of powered block
+            let powerUp = this.getRandom(0, 70); // Chance of powered block
             (powerUp <= this.powerUps.length - 1) && this.game.settings[2] === 'POWER-UPS' ? powerUp = this.powerUps[powerUp] : powerUp = 'none';
             stack.push({
                 color: newColor,
