@@ -11,6 +11,8 @@ class FIFO {
         this.settings = [];
         this.soundtrack = $('#soundtrack')[0];
         this.soundtrack.volume = 0.7;
+        this.soundWin = new Audio("etc/Winning-sound-effect.mp3");
+        this.soundWin.volume = 0.7;
         this.isPlaying = true;
     }
 
@@ -100,6 +102,7 @@ class FIFO {
     }
 
     gameOver() {
+        this.soundWin.play();
         if (this.players[0].points === this.players[1].points) {
             $('#gameover').find('h3').html("ITS A DRAW");
         } else if (this.players[0].points > this.players[1].points) {
@@ -133,6 +136,7 @@ class FIFO {
 
     muteAudio() {
         this.soundtrack.volume ? this.soundtrack.volume = 0 : this.soundtrack.volume = 0.7;
+        this.soundWin.volume ? this.soundWin.volume = 0 : this.soundWin.volume = 0.7;
         $(this.players).each((i, player) => {
             player.soundPop.volume ? player.soundPop.volume = 0 : player.soundPop.volume = 0.7;
             player.soundIce.volume ? player.soundIce.volume = 0 : player.soundIce.volume = 0.7;
