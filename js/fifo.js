@@ -5,15 +5,28 @@ class FIFO {
         this.colors = ['red', 'blue', 'green', 'yellow'];
         this.stackType = 'SINGLE';
         this.timer = 30; // Game Length (Seconds)
+        this.splashAnimation();
         this.addMenuListeners();
         this.addGameListeners();
         this.addGameOverListeners();
         this.settings = [];
-        this.soundtrack = $('#soundtrack')[0];
+        this.soundtrack = $('#soundtrack')[0]; // http://freemusicarchive.org/music/RoccoW/_1035/RoccoW_-__-_07_Fuck_Sidechain_Compression_on_Gameboy
         this.soundtrack.volume = 0.7;
         this.soundWin = new Audio("etc/Winning-sound-effect.mp3");
         this.soundWin.volume = 0.7;
         this.isPlaying = true;
+    }
+
+    splashAnimation() {
+        setTimeout(() => {
+            $('#splash').animate({
+                opacity: 0.25,
+                left: "+=50",
+                height: "toggle"
+            }, 4000);
+        }, 2000);
+        $('#splash > h3').hide();
+        $('#splash > h3').animate({width:'toggle'}, 1000);
     }
 
     /* Adds the game menu listeners to the options */
