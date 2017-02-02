@@ -26,7 +26,7 @@ class FIFO {
             }, 4000);
         }, 2000);
         $('#splash > h3').hide();
-        $('#splash > h3').animate({width:'toggle'}, 1000);
+        $('#splash > h3').fadeIn(1000);
     }
 
     /* Adds the game menu listeners to the options */
